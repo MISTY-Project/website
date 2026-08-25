@@ -1,17 +1,77 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ScienceGoals from "../components/ScienceGoals.astro";
+import GalaxyGallery from "../components/GalaxyGallery.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="MISTY"
+  description="Mapping the ISM and Stellar populations of TinY galaxies"
+>
+  <section class="intro" aria-labelledby="intro-heading">
+    <h1 id="intro-heading" class="visually-hidden">About MISTY</h1>
+    <div class="intro__prose">
+      <p class="intro__lead">
+        How do galaxies turn gas into stars, regulate their growth, and assemble
+        their mass across cosmic time? At the heart of this question is the
+        baryon cycle—the continual exchange of matter and energy between stars,
+        the interstellar medium (ISM), and the circumgalactic environment. Gas
+        cools into molecular clouds that collapse to form stars, while massive
+        stars return energy and newly synthesized elements through radiation,
+        winds, and supernovae, disrupting their natal clouds and recycling
+        material within galaxies and into their surroundings.
+      </p>
+      <p>
+        MISTY maps key stages of this cycle in the low-mass, low-metallicity
+        regime: a largely unexplored environment that encompasses the majority
+        of star-forming conditions in the Universe by number. We are building a
+        multi-wavelength, high-resolution view of nearby dwarf galaxies,
+        combining observations from the ground and space to resolve the stars,
+        gas, and star-forming structures that drive galaxy evolution.
+      </p>
+    </div>
+  </section>
+
+  <ScienceGoals />
+
+  <GalaxyGallery />
+</BaseLayout>
+
+<style>
+  .intro {
+    max-width: var(--reading-max);
+  }
+
+  .intro__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .intro__lead {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .intro__prose p {
+    margin-bottom: 1.2em;
+  }
+
+  .intro__prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
+    .intro__prose {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .intro__lead {
+      font-size: 1.1875rem;
+      line-height: 1.72;
+    }
+  }
+</style>

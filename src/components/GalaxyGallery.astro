@@ -1,0 +1,347 @@
+---
+import { galaxies, observationLegend } from "../data/galaxies";
+
+interface Props {
+  asOf?: string;
+}
+
+const { asOf = "August 2026" } = Astro.props;
+const heading = `MISTY galaxies as of ${asOf} (ongoing)`;
+
+function legacySurveyUrl(objectId: string): string {
+  return `https://www.legacysurvey.org/viewer/desi-spectrum/dr1/targetid${objectId}`;
+}
+---
+
+<section class="galaxy-gallery" aria-labelledby="galaxies-heading" data-galaxy-gallery>
+  <div class="galaxy-gallery__top">
+    <div class="galaxy-gallery__header">
+      <h2 id="galaxies-heading" class="section-title">{heading}</h2>
+    </div>
+
+    <div class="galaxy-gallery__controls">
+      <ul class="galaxy-gallery__legend" aria-label="Observation types">
+        {
+          observationLegend.map((item) => (
+            <li class="galaxy-gallery__legend-item">
+              <img
+                class="galaxy-gallery__legend-icon"
+                src={item.icon}
+                alt=""
+                width="32"
+                height="32"
+                loading="lazy"
+              />
+              <span>{item.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="galaxy-gallery__sort">
+        <label class="galaxy-gallery__sort-label" for="galaxy-sort">
+          Order galaxies by
+        </label>
+        <select
+          id="galaxy-sort"
+          class="galaxy-gallery__sort-select"
+          data-galaxy-sort
+        >
+          <option value="mass-desc" selected>
+            Stellar mass — high to low
+          </option>
+          <option value="mass-asc">Stellar mass — low to high</option>
+          <option value="distance-asc">Distance — near to far</option>
+          <option value="distance-desc">Distance — far to near</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {
+    galaxies.length === 0 ? (
+      <p class="galaxy-gallery__empty">Galaxy gallery coming soon.</p>
+    ) : (
+      <ul class="galaxy-gallery__grid" data-galaxy-grid>
+        {galaxies.map((galaxy, index) => (
+          <li
+            data-galaxy-item
+            data-index={String(index)}
+            data-mass={
+              galaxy.stellarMassLog10 === null
+                ? ""
+                : String(galaxy.stellarMassLog10)
+            }
+            data-distance={
+              galaxy.distanceMpc === null ? "" : String(galaxy.distanceMpc)
+            }
+          >
+            <a
+              class="galaxy-card"
+              href={legacySurveyUrl(galaxy.id)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open Legacy Survey spectrum viewer for MISTY galaxy ${galaxy.id}`}
+            >
+              <span class="galaxy-card__media">
+                <img
+                  src={galaxy.image}
+                  alt=""
+                  width="900"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
+
+<style>
+  .galaxy-gallery {
+    padding-top: 0.35rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .galaxy-gallery__top {
+    margin-top: 2.15rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .galaxy-gallery__controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .galaxy-gallery__legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .galaxy-gallery__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+  }
+
+  .galaxy-gallery__legend-icon {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+    flex-shrink: 0;
+  }
+
+  .galaxy-gallery__sort {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.75rem;
+  }
+
+  .galaxy-gallery__sort-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .galaxy-gallery__sort-select {
+    min-height: 2.5rem;
+    min-width: min(100%, 17rem);
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background-color: var(--surface-strong);
+    color: var(--text);
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+
+  .galaxy-gallery__sort-select:hover {
+    border-color: color-mix(in srgb, var(--navy) 35%, var(--rule));
+  }
+
+  .galaxy-gallery__empty {
+    margin: 0;
+    padding: 1.25rem 0;
+    color: var(--text-muted);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .galaxy-gallery__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .galaxy-card {
+    display: block;
+    background: var(--surface-strong);
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 160ms ease, box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .galaxy-card:hover {
+    border-color: color-mix(in srgb, var(--navy) 30%, var(--rule));
+    box-shadow: 0 4px 14px rgba(28, 29, 31, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .galaxy-card:focus-visible {
+    outline: 2px solid var(--navy);
+    outline-offset: 2px;
+  }
+
+  .galaxy-card__media {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--surface-muted);
+  }
+
+  .galaxy-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 340px) {
+    .galaxy-gallery__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+  }
+
+  @media (min-width: 700px) {
+    .galaxy-gallery__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .galaxy-gallery__top {
+      margin-top: 2.5rem;
+    }
+
+    .galaxy-gallery__controls {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .galaxy-gallery__legend-item {
+      gap: 0.8rem;
+    }
+
+    .galaxy-gallery__legend-icon {
+      width: 2.625rem; /* 42px */
+      height: 2.625rem;
+    }
+
+    .galaxy-gallery__grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.5625rem; /* 9px */
+    }
+  }
+</style>
+
+<script>
+  type SortMode = "mass-desc" | "mass-asc" | "distance-asc" | "distance-desc";
+
+  function parseOptionalNumber(value: string | undefined): number | null {
+    if (value === undefined || value === "") return null;
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function compareNullable(
+    a: number | null,
+    b: number | null,
+    ascending: boolean,
+    indexA: number,
+    indexB: number,
+  ): number {
+    const aMissing = a === null;
+    const bMissing = b === null;
+    if (aMissing && bMissing) return indexA - indexB;
+    if (aMissing) return 1;
+    if (bMissing) return -1;
+    if (a === b) return indexA - indexB;
+    return ascending ? a - b : b - a;
+  }
+
+  function sortGallery(root: HTMLElement, mode: SortMode) {
+    const grid = root.querySelector<HTMLElement>("[data-galaxy-grid]");
+    if (!grid) return;
+
+    const items = Array.from(
+      grid.querySelectorAll<HTMLElement>(":scope > [data-galaxy-item]"),
+    );
+
+    items.sort((a, b) => {
+      const indexA = Number(a.dataset.index ?? "0");
+      const indexB = Number(b.dataset.index ?? "0");
+      const massA = parseOptionalNumber(a.dataset.mass);
+      const massB = parseOptionalNumber(b.dataset.mass);
+      const distA = parseOptionalNumber(a.dataset.distance);
+      const distB = parseOptionalNumber(b.dataset.distance);
+
+      switch (mode) {
+        case "mass-asc":
+          return compareNullable(massA, massB, true, indexA, indexB);
+        case "mass-desc":
+          return compareNullable(massA, massB, false, indexA, indexB);
+        case "distance-asc":
+          return compareNullable(distA, distB, true, indexA, indexB);
+        case "distance-desc":
+          return compareNullable(distA, distB, false, indexA, indexB);
+        default:
+          return indexA - indexB;
+      }
+    });
+
+    const fragment = document.createDocumentFragment();
+    items.forEach((item) => fragment.appendChild(item));
+    grid.appendChild(fragment);
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-galaxy-gallery]").forEach((root) => {
+    const select = root.querySelector<HTMLSelectElement>("[data-galaxy-sort]");
+    if (!select) return;
+
+    const apply = () => {
+      sortGallery(root, select.value as SortMode);
+    };
+
+    select.addEventListener("change", apply);
+    apply();
+  });
+</script>
