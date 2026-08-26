@@ -1,0 +1,244 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const censusAlt =
+  "DESI spectroscopic census of dwarf galaxies, showing the distribution of spectroscopically confirmed dwarf galaxies and a smaller comparison sample of pre-DESI dwarfs.";
+const censusCaption =
+  "The DESI dwarf-galaxy census. Each black point represents a spectroscopically confirmed dwarf galaxy.";
+---
+
+<BaseLayout
+  title="Sample"
+  description="MISTY sample selection from the DESI dwarf-galaxy census."
+>
+  <article class="sample-page">
+    <div class="sample-page__prose">
+      <p>
+        MISTY selects its targets from the DESI dwarf-galaxy census. In its
+        first data release, DESI identified spectroscopically approximately
+        500,000 dwarf galaxies to z&nbsp;≤&nbsp;0.2. This number is expected to
+        grow to approximately 1,000,000 in the next data release.
+      </p>
+      <p>
+        At the distances targeted by MISTY, DESI is complete for non-quiescent
+        systems down to stellar masses of approximately 10<sup>6</sup>&nbsp;M<sub>☉</sub>,
+        above μ<sub>V</sub>&nbsp;≈&nbsp;25&nbsp;mag&nbsp;arcsec<sup>−2</sup> and
+        subject to emission-line detection limits. We use the dwarf-galaxy{" "}
+        <a
+          href="https://virajvman.github.io/desidwarfs_webapp/index.html"
+          target="_blank"
+          rel="noopener noreferrer">catalog</a>{" "}
+        (Manwadkar et al., submitted), which provides photometry, emission-line
+        flux measurements, star-formation rates, stellar masses, and additional
+        derived properties.
+      </p>
+    </div>
+
+    <div class="sample-page__selection-block">
+      <figure class="sample-page__figure sample-figure-one--desktop">
+        <img
+          src="/images/sample/desi-dwarf-census.png"
+          alt={censusAlt}
+          width="1535"
+          height="1240"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>{censusCaption}</figcaption>
+      </figure>
+
+      <div class="sample-page__prose sample-page__selection-text">
+        <p>
+          The DESI dwarf-galaxy population shows substantial diversity in
+          star-formation rate and metallicity at fixed stellar mass. MISTY
+          selects galaxies within 30&nbsp;Mpc and with stellar masses of
+          10<sup>6</sup>–10<sup>8.5</sup>&nbsp;M<sub>☉</sub>. To construct a
+          representative population of dwarf galaxies, we sample uniformly in
+          the specific-star-formation-rate–metallicity plane. Metallicities are
+          estimated from DESI integrated spectra within the
+          1.5&nbsp;arcsec-diameter fiber aperture, using the direct
+          temperature-sensitive method where possible and the S-cal strong-line
+          calibration otherwise.
+        </p>
+
+        <figure class="sample-page__figure sample-figure-one--mobile">
+          <img
+            src="/images/sample/desi-dwarf-census.png"
+            alt={censusAlt}
+            width="1535"
+            height="1240"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>{censusCaption}</figcaption>
+        </figure>
+
+        <p>
+          MISTY also samples the full range of large-scale environments, from
+          isolated dwarfs through galaxies in overdense regions to satellites
+          and interacting systems. The science goals require the detection of
+          weak auroral lines in individual spaxels of the optical IFU data
+          cubes. This requirement imposes an emission-line flux threshold
+          compatible with observations from Magellan and Keck, while telescope
+          location also determines which targets are observable.
+        </p>
+      </div>
+    </div>
+
+    <figure class="sample-page__figure sample-page__figure--selection sample-figure-two">
+      <picture>
+        <source
+          media="(max-width: 639px)"
+          srcset="/images/sample/misty-sample-selection-mobile.png"
+        />
+        <img
+          src="/images/sample/misty-sample-selection.png"
+          alt="Comparison of the DESI dwarf-galaxy population and MISTY targets in star-formation-rate versus stellar-mass and metallicity versus stellar-mass space."
+          width="3600"
+          height="1200"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <figcaption>
+        MISTY in the DESI dwarf-galaxy population. The MISTY targets sample the
+        distributions of star-formation activity and gas-phase metallicity at
+        fixed stellar mass within the nearby DESI dwarf population.
+      </figcaption>
+    </figure>
+  </article>
+</BaseLayout>
+
+<style>
+  .sample-page {
+    max-width: var(--reading-max);
+    padding-top: 1.25rem;
+  }
+
+  .sample-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .sample-page__prose p {
+    margin: 0 0 1.15em;
+  }
+
+  .sample-page__prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .sample-page__prose a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .sample-page__prose a:hover {
+    color: var(--navy-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  .sample-page__selection-block {
+    display: block;
+    margin-top: 1.5rem;
+  }
+
+  .sample-page__figure img,
+  .sample-page__figure picture {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .sample-page__figure img {
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+  }
+
+  .sample-page__figure figcaption {
+    margin-top: 0.55rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  /* Desktop/tablet: right-floated half-width Figure 1 */
+  .sample-figure-one--desktop {
+    display: block;
+    float: right;
+    width: 48%;
+    margin: 0 0 16px 32px;
+  }
+
+  .sample-figure-one--desktop img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Mobile instance hidden above the mobile breakpoint */
+  .sample-figure-one--mobile {
+    display: none;
+  }
+
+  .sample-figure-two {
+    clear: both;
+  }
+
+  .sample-page__figure--selection {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 2rem 0 0;
+    clear: both;
+    float: none;
+  }
+
+  @media (max-width: 700px) {
+    .sample-figure-one--desktop {
+      display: none;
+    }
+
+    .sample-figure-one--mobile {
+      display: block;
+      float: none;
+      width: 100%;
+      margin: 24px 0 28px;
+    }
+
+    .sample-figure-one--mobile img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @media (min-width: 701px) {
+    .sample-page {
+      padding-top: 1.65rem;
+    }
+
+    .sample-page__prose {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .sample-page__selection-block {
+      margin-top: 1.75rem;
+    }
+
+    .sample-page__figure figcaption {
+      font-size: 0.875rem;
+    }
+
+    .sample-page__figure--selection {
+      margin-top: 2.25rem;
+    }
+  }
+</style>
