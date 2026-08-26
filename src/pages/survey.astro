@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SurveyDesignPrinciples from "../components/SurveyDesignPrinciples.astro";
+---
+
+<BaseLayout
+  title="Survey"
+  description="The MISTY Survey: a resolved view of the baryon cycle across the low-metallicity regime."
+>
+  <article class="survey-page">
+    <div class="survey-page__intro">
+      <div class="survey-page__prose">
+        <p class="survey-page__lead">
+          MISTY is designed to establish a resolved view of the baryon cycle
+          across the low-metallicity regime. Low-mass galaxies dominate the
+          galaxy population by number, and the physical conditions that govern
+          their formation and evolution differ fundamentally from those in massive,
+          near-solar-metallicity systems. Metal-poor massive stars emit harder
+          ionizing radiation; reduced dust and metal content alter shielding,
+          cooling, and chemistry; and shallow gravitational potentials allow stellar
+          feedback to redistribute or expel gas more efficiently.
+        </p>
+        <p>
+          Over the past decade, resolved multi-wavelength surveys have
+          transformed our understanding of the baryon cycle in nearby massive
+          galaxies. By mapping molecular clouds, H&nbsp;II regions, and young
+          star clusters on 10–100&nbsp;pc scales across entire galaxies, these
+          programs have constrained cloud lifetimes, gas–star overlap,
+          pre-supernova cloud dispersal, and variations in star-formation
+          efficiency. MISTY aims to provide the comprehensive counterpart for 
+          the low-mass, low-metallicity regime, where these processes remain far
+          less well constrained.
+        </p>
+        <p>
+          MISTY is designed around two defining features of the baryon cycle: it operates
+          across a wide range of spatial scales and links stars, multiphase gas, and dust.
+          Understanding it therefore demands a multi-scale, multi-wavelength approach.
+          The formation and evolution of young star clusters, H&nbsp;II-region structure,
+          cloud dispersal, metal enrichment, and turbulence injection occur on scales of
+          approximately 10–100&nbsp;pc, while their cumulative effects on gas flows,
+          ionizing-radiation escape, galaxy-wide star formation, and chemical evolution
+          must be measured across entire galaxies. Characterizing stars, multiphase gas, 
+          and dust further requires observations across the electromagnetic spectrum. 
+        </p>
+      </div>
+    </div>
+
+    <div class="survey-page__principles">
+      <SurveyDesignPrinciples />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .survey-page {
+    max-width: var(--reading-max);
+    /* Combined with .site-main padding-top (~1.5rem): ~44–48px total */
+    padding-top: 1.25rem;
+  }
+
+  .survey-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .survey-page__lead {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .survey-page__prose p {
+    margin-bottom: 1.15em;
+  }
+
+  .survey-page__prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .survey-page__principles {
+    margin-top: 3rem; /* ~48px mobile separation */
+    padding-top: 0;
+  }
+
+  @media (min-width: 768px) {
+    .survey-page {
+      /* Combined with .site-main padding-top (~1.85rem): ~56px total */
+      padding-top: 1.65rem;
+    }
+
+    .survey-page__prose {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .survey-page__lead {
+      font-size: 1.1875rem;
+      line-height: 1.72;
+    }
+
+    .survey-page__principles {
+      margin-top: 4.5rem; /* ~72px desktop separation */
+    }
+  }
+</style>

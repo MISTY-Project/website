@@ -14,7 +14,7 @@ export interface Galaxy {
 export const observationLegend = [
   {
     id: "optical-ifu" as const,
-    label: "Ground-based optical IFU",
+    label: "Optical IFU (full sample coverage in progress)",
     icon: "/images/observations/optical-ifu.png",
   },
   {

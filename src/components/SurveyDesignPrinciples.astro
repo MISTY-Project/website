@@ -1,0 +1,367 @@
+---
+import { surveyDesignPrinciples } from "../data/survey-design-principles";
+---
+
+<section
+  class="design-principles"
+  aria-labelledby="design-principles-heading"
+  data-design-principles
+>
+  <h2 id="design-principles-heading" class="section-title">Design principles</h2>
+
+  <div class="design-principles__panel">
+    <div
+      class="design-principles__tabs"
+      role="tablist"
+      aria-label="Survey design principles"
+      data-principle-tabs
+    >
+      {
+        surveyDesignPrinciples.map((principle, index) => (
+          <button
+            type="button"
+            class:list={[
+              "design-principles__tab",
+              { "is-active": index === 0 },
+            ]}
+            role="tab"
+            id={`principle-tab-${principle.id}`}
+            aria-selected={index === 0 ? "true" : "false"}
+            aria-controls={`principle-panel-${principle.id}`}
+            tabindex={index === 0 ? 0 : -1}
+            data-principle-tab={principle.id}
+            data-principle-label={principle.label}
+          >
+            {principle.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="design-principles__mobile-nav" data-principle-mobile-nav>
+      <button
+        type="button"
+        class="design-principles__arrow"
+        aria-label="Previous design principle"
+        data-principle-prev
+        disabled
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+      <p class="design-principles__mobile-label" data-principle-mobile-label>
+        {surveyDesignPrinciples[0]?.label ?? ""}
+      </p>
+      <button
+        type="button"
+        class="design-principles__arrow"
+        aria-label="Next design principle"
+        data-principle-next
+      >
+        <span aria-hidden="true">›</span>
+      </button>
+    </div>
+
+    <div class="design-principles__content">
+      {
+        surveyDesignPrinciples.map((principle, index) => (
+          <div
+            class:list={[
+              "design-principles__panel-body",
+              { "is-active": index === 0 },
+            ]}
+            role="tabpanel"
+            id={`principle-panel-${principle.id}`}
+            aria-labelledby={`principle-tab-${principle.id}`}
+            hidden={index !== 0}
+            data-principle-panel={principle.id}
+          >
+            {principle.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .design-principles {
+    min-width: 0;
+  }
+
+  .design-principles .section-title {
+    margin-bottom: 1.25rem;
+  }
+
+  .design-principles__panel {
+    background-color: var(--surface-muted);
+    border: 1px solid var(--rule);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .design-principles__tabs {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-inline: 0.5rem;
+  }
+
+  .design-principles__tab {
+    appearance: none;
+    flex: 1 1 auto;
+    min-height: 2.95rem;
+    margin: 0;
+    padding: 0.8rem 0.95rem 0.75rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .design-principles__tab:hover {
+    color: var(--text);
+  }
+
+  .design-principles__tab.is-active {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+    font-weight: 600;
+  }
+
+  .design-principles__mobile-nav {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 3.25rem;
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .design-principles__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+    color: var(--navy);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .design-principles__arrow:hover:not(:disabled) {
+    border-color: var(--navy);
+  }
+
+  .design-principles__arrow:disabled {
+    color: color-mix(in srgb, var(--text-muted) 55%, transparent);
+    border-color: color-mix(in srgb, var(--rule) 80%, transparent);
+    background: color-mix(in srgb, var(--surface-muted) 70%, var(--surface));
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .design-principles__mobile-label {
+    margin: 0;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.35;
+    padding-inline: 0.35rem;
+    overflow-wrap: anywhere;
+  }
+
+  .design-principles__content {
+    padding: 1.35rem 1.2rem 1.55rem;
+    background: var(--surface);
+    min-width: 0;
+  }
+
+  .design-principles__panel-body {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .design-principles__panel-body p {
+    margin: 0 0 1.1em;
+  }
+
+  .design-principles__panel-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .design-principles__panel-body[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .design-principles .section-title {
+      margin-bottom: 1.4rem;
+    }
+
+    .design-principles__mobile-nav {
+      display: none;
+    }
+
+    .design-principles__tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      padding-inline: 0.5rem;
+    }
+
+    .design-principles__tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 4.35rem;
+      box-sizing: border-box;
+      padding: 0.75rem 0.7rem 0.7rem;
+      font-size: 0.9375rem;
+      line-height: 1.3;
+      white-space: normal;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    .design-principles__content {
+      padding: 1.7rem 1.75rem 1.85rem;
+    }
+
+    .design-principles__panel-body {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .design-principles__tab {
+      padding-inline: 0.9rem;
+      font-size: 0.975rem;
+    }
+  }
+</style>
+
+<script>
+  function getTabs(root: Element) {
+    return Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-principle-tab]"),
+    );
+  }
+
+  function activatePrinciple(root: Element, principleId: string) {
+    const tabs = getTabs(root);
+    const panels = root.querySelectorAll<HTMLElement>("[data-principle-panel]");
+    const label = root.querySelector<HTMLElement>("[data-principle-mobile-label]");
+    const prev = root.querySelector<HTMLButtonElement>("[data-principle-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-principle-next]");
+
+    let activeIndex = 0;
+
+    tabs.forEach((tab, index) => {
+      const isActive = tab.dataset.principleTab === principleId;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+      if (isActive) {
+        activeIndex = index;
+        if (label) {
+          label.textContent = tab.dataset.principleLabel ?? tab.textContent ?? "";
+        }
+      }
+    });
+
+    panels.forEach((panel) => {
+      const isActive = panel.dataset.principlePanel === principleId;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+
+    if (prev) prev.disabled = activeIndex <= 0;
+    if (next) next.disabled = activeIndex >= tabs.length - 1;
+  }
+
+  document.querySelectorAll("[data-design-principles]").forEach((root) => {
+    const tabs = getTabs(root);
+    const prev = root.querySelector<HTMLButtonElement>("[data-principle-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-principle-next]");
+
+    const getActiveIndex = () =>
+      Math.max(
+        0,
+        tabs.findIndex((tab) => tab.classList.contains("is-active")),
+      );
+
+    root.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+      const tab = target?.closest<HTMLButtonElement>("[data-principle-tab]");
+      if (tab && root.contains(tab) && tab.dataset.principleTab) {
+        activatePrinciple(root, tab.dataset.principleTab);
+      }
+    });
+
+    prev?.addEventListener("click", () => {
+      if (prev.disabled) return;
+      const target = tabs[getActiveIndex() - 1];
+      if (!target?.dataset.principleTab) return;
+      activatePrinciple(root, target.dataset.principleTab);
+    });
+
+    next?.addEventListener("click", () => {
+      if (next.disabled) return;
+      const target = tabs[getActiveIndex() + 1];
+      if (!target?.dataset.principleTab) return;
+      activatePrinciple(root, target.dataset.principleTab);
+    });
+
+    root.addEventListener("keydown", (event) => {
+      const target = event.target as HTMLElement | null;
+      const current = target?.closest<HTMLButtonElement>("[data-principle-tab]");
+      if (!current || !root.contains(current)) return;
+
+      const index = tabs.indexOf(current);
+      if (index < 0) return;
+
+      let nextIndex = index;
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        nextIndex = Math.min(index + 1, tabs.length - 1);
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        nextIndex = Math.max(index - 1, 0);
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = tabs.length - 1;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      const nextTab = tabs[nextIndex];
+      if (!nextTab?.dataset.principleTab) return;
+      nextTab.focus();
+      activatePrinciple(root, nextTab.dataset.principleTab);
+    });
+
+    if (tabs[0]?.dataset.principleTab) {
+      activatePrinciple(root, tabs[0].dataset.principleTab);
+    }
+  });
+</script>

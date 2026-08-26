@@ -10,29 +10,52 @@ import { scienceGoals } from "../data/science-goals";
   <h2 id="science-goals-heading" class="section-title">Survey Science Goals</h2>
 
   <div class="science-goals__panel">
-    <div
-      class="science-goals__tabs"
-      role="tablist"
-      aria-label="Survey science goals"
-      data-goal-tabs
-    >
-      {
-        scienceGoals.map((goal, index) => (
-          <button
-            type="button"
-            class:list={["science-goals__tab", { "is-active": index === 0 }]}
-            role="tab"
-            id={`tab-${goal.id}`}
-            aria-selected={index === 0 ? "true" : "false"}
-            aria-controls={`panel-${goal.id}`}
-            tabindex={index === 0 ? 0 : -1}
-            data-goal-tab={goal.id}
-            data-goal-label={goal.label}
-          >
-            {goal.label}
-          </button>
-        ))
-      }
+    <div class="science-goals__desktop-nav" data-goal-desktop-nav>
+      <button
+        type="button"
+        class="science-goals__tabs-arrow"
+        aria-label="Show previous science goal tabs"
+        data-goal-tabs-prev
+        disabled
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <div class="science-goals__tabs-track" data-goal-tabs-track>
+        <div
+          class="science-goals__tabs"
+          role="tablist"
+          aria-label="Survey science goals"
+          data-goal-tabs
+        >
+          {
+            scienceGoals.map((goal, index) => (
+              <button
+                type="button"
+                class:list={["science-goals__tab", { "is-active": index === 0 }]}
+                role="tab"
+                id={`tab-${goal.id}`}
+                aria-selected={index === 0 ? "true" : "false"}
+                aria-controls={`panel-${goal.id}`}
+                tabindex={index === 0 ? 0 : -1}
+                data-goal-tab={goal.id}
+                data-goal-label={goal.label}
+              >
+                {goal.label}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="science-goals__tabs-arrow"
+        aria-label="Show next science goal tabs"
+        data-goal-tabs-next
+      >
+        <span aria-hidden="true">›</span>
+      </button>
     </div>
 
     <div class="science-goals__mobile-nav" data-goal-mobile-nav>
@@ -84,6 +107,7 @@ import { scienceGoals } from "../data/science-goals";
 <style>
   .science-goals {
     padding-bottom: 0.75rem;
+    min-width: 0;
   }
 
   .science-goals .section-title {
@@ -93,13 +117,68 @@ import { scienceGoals } from "../data/science-goals";
   .science-goals__panel {
     background-color: var(--surface-muted);
     border: 1px solid var(--rule);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .science-goals__desktop-nav {
+    display: none;
+    align-items: stretch;
+    gap: 0.15rem;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.2rem 0.35rem;
+    min-width: 0;
+  }
+
+  .science-goals__tabs-arrow {
+    flex: 0 0 auto;
+    align-self: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--navy);
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .science-goals__tabs-arrow:hover:not(:disabled) {
+    border-color: var(--rule);
+    background: var(--surface-strong);
+  }
+
+  .science-goals__tabs-arrow:disabled {
+    color: color-mix(in srgb, var(--text-muted) 55%, transparent);
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .science-goals__tabs-track {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .science-goals__tabs-track::-webkit-scrollbar {
+    display: none;
   }
 
   .science-goals__tabs {
-    display: none;
+    display: flex;
+    flex-wrap: nowrap;
     gap: 0;
-    border-bottom: 1px solid var(--rule);
-    padding-inline: 0.75rem;
+    width: max-content;
+    min-width: 100%;
   }
 
   .science-goals__tab {
@@ -182,6 +261,7 @@ import { scienceGoals } from "../data/science-goals";
   .science-goals__content {
     padding: 1.35rem 1.2rem 1.55rem;
     background: var(--surface);
+    min-width: 0;
   }
 
   .science-goals__title {
@@ -211,7 +291,7 @@ import { scienceGoals } from "../data/science-goals";
       display: none;
     }
 
-    .science-goals__tabs {
+    .science-goals__desktop-nav {
       display: flex;
     }
 
@@ -227,16 +307,63 @@ import { scienceGoals } from "../data/science-goals";
 </style>
 
 <script>
+  function getTabs(root: Element) {
+    return Array.from(root.querySelectorAll<HTMLButtonElement>("[data-goal-tab]"));
+  }
+
+  function updateTabsScrollState(root: Element) {
+    const track = root.querySelector<HTMLElement>("[data-goal-tabs-track]");
+    const prev = root.querySelector<HTMLButtonElement>("[data-goal-tabs-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-goal-tabs-next]");
+    if (!track || !prev || !next) return;
+
+    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+    const atStart = track.scrollLeft <= 1;
+    const atEnd = track.scrollLeft >= maxScroll - 1;
+
+    prev.disabled = atStart || maxScroll <= 0;
+    next.disabled = atEnd || maxScroll <= 0;
+  }
+
+  function scrollTabsBy(root: Element, direction: -1 | 1) {
+    const track = root.querySelector<HTMLElement>("[data-goal-tabs-track]");
+    if (!track) return;
+
+    const amount = Math.max(120, Math.round(track.clientWidth * 0.75));
+    track.scrollBy({ left: direction * amount, behavior: "smooth" });
+  }
+
+  function ensureTabVisible(root: Element, tab: HTMLElement) {
+    const track = root.querySelector<HTMLElement>("[data-goal-tabs-track]");
+    if (!track) return;
+
+    const tabLeft = tab.offsetLeft;
+    const tabRight = tabLeft + tab.offsetWidth;
+    const viewLeft = track.scrollLeft;
+    const viewRight = viewLeft + track.clientWidth;
+    const pad = 12;
+
+    if (tabLeft < viewLeft + pad) {
+      track.scrollTo({ left: Math.max(0, tabLeft - pad), behavior: "smooth" });
+    } else if (tabRight > viewRight - pad) {
+      track.scrollTo({
+        left: Math.max(0, tabRight - track.clientWidth + pad),
+        behavior: "smooth",
+      });
+    } else {
+      updateTabsScrollState(root);
+    }
+  }
+
   function activateGoal(root: Element, goalId: string) {
-    const tabs = Array.from(
-      root.querySelectorAll<HTMLButtonElement>("[data-goal-tab]"),
-    );
+    const tabs = getTabs(root);
     const panels = root.querySelectorAll<HTMLElement>("[data-goal-panel]");
     const label = root.querySelector<HTMLElement>("[data-goal-mobile-label]");
     const prev = root.querySelector<HTMLButtonElement>("[data-goal-prev]");
     const next = root.querySelector<HTMLButtonElement>("[data-goal-next]");
 
     let activeIndex = 0;
+    let activeTab: HTMLButtonElement | null = null;
 
     tabs.forEach((tab, index) => {
       const isActive = tab.dataset.goalTab === goalId;
@@ -245,6 +372,7 @@ import { scienceGoals } from "../data/science-goals";
       tab.tabIndex = isActive ? 0 : -1;
       if (isActive) {
         activeIndex = index;
+        activeTab = tab;
         if (label) {
           label.textContent = tab.dataset.goalLabel ?? tab.textContent ?? "";
         }
@@ -263,14 +391,19 @@ import { scienceGoals } from "../data/science-goals";
     if (next) {
       next.disabled = activeIndex >= tabs.length - 1;
     }
+
+    if (activeTab) {
+      ensureTabVisible(root, activeTab);
+    }
   }
 
   document.querySelectorAll("[data-science-goals]").forEach((root) => {
-    const tabs = Array.from(
-      root.querySelectorAll<HTMLButtonElement>("[data-goal-tab]"),
-    );
-    const prev = root.querySelector<HTMLButtonElement>("[data-goal-prev]");
-    const next = root.querySelector<HTMLButtonElement>("[data-goal-next]");
+    const tabs = getTabs(root);
+    const track = root.querySelector<HTMLElement>("[data-goal-tabs-track]");
+    const tabsPrev = root.querySelector<HTMLButtonElement>("[data-goal-tabs-prev]");
+    const tabsNext = root.querySelector<HTMLButtonElement>("[data-goal-tabs-next]");
+    const goalPrev = root.querySelector<HTMLButtonElement>("[data-goal-prev]");
+    const goalNext = root.querySelector<HTMLButtonElement>("[data-goal-next]");
 
     const getActiveIndex = () =>
       Math.max(
@@ -283,24 +416,47 @@ import { scienceGoals } from "../data/science-goals";
       const tab = target?.closest<HTMLButtonElement>("[data-goal-tab]");
       if (tab && root.contains(tab) && tab.dataset.goalTab) {
         activateGoal(root, tab.dataset.goalTab);
-        return;
       }
     });
 
-    prev?.addEventListener("click", () => {
-      if (prev.disabled) return;
+    tabsPrev?.addEventListener("click", () => {
+      if (tabsPrev.disabled) return;
+      scrollTabsBy(root, -1);
+    });
+
+    tabsNext?.addEventListener("click", () => {
+      if (tabsNext.disabled) return;
+      scrollTabsBy(root, 1);
+    });
+
+    goalPrev?.addEventListener("click", () => {
+      if (goalPrev.disabled) return;
       const index = getActiveIndex();
       const target = tabs[index - 1];
       if (!target?.dataset.goalTab) return;
       activateGoal(root, target.dataset.goalTab);
     });
 
-    next?.addEventListener("click", () => {
-      if (next.disabled) return;
+    goalNext?.addEventListener("click", () => {
+      if (goalNext.disabled) return;
       const index = getActiveIndex();
       const target = tabs[index + 1];
       if (!target?.dataset.goalTab) return;
       activateGoal(root, target.dataset.goalTab);
+    });
+
+    track?.addEventListener(
+      "scroll",
+      () => {
+        updateTabsScrollState(root);
+      },
+      { passive: true },
+    );
+
+    window.addEventListener("resize", () => {
+      const active = tabs.find((tab) => tab.classList.contains("is-active"));
+      if (active) ensureTabVisible(root, active);
+      else updateTabsScrollState(root);
     });
 
     root.addEventListener("keydown", (event) => {
@@ -331,9 +487,9 @@ import { scienceGoals } from "../data/science-goals";
       activateGoal(root, nextTab.dataset.goalTab);
     });
 
-    // Ensure initial mobile control state matches Goal 1.
     if (tabs[0]?.dataset.goalTab) {
       activateGoal(root, tabs[0].dataset.goalTab);
     }
+    updateTabsScrollState(root);
   });
 </script>

@@ -9,7 +9,13 @@ const navItems = [
   { href: "/related-efforts", label: "Related Efforts" },
 ];
 
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isHome = currentPath === "/";
+
+function isNavActive(href: string): boolean {
+  if (href === "/") return currentPath === "/";
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
 ---
 
 <header class="site-header" data-site-header>
@@ -22,37 +28,84 @@ const currentPath = Astro.url.pathname;
         </p>
       </div>
 
-      <button
-        type="button"
-        class="site-header__menu-toggle"
-        aria-expanded="false"
-        aria-controls="site-nav"
-        data-menu-toggle
-      >
-        <span class="visually-hidden">Menu</span>
-        <span class="site-header__menu-icon" aria-hidden="true"></span>
-      </button>
+      <div class="site-header__actions">
+        <a
+          href="/"
+          class:list={[
+            "site-header__home",
+            "site-header__home--masthead",
+            { "is-active": isHome },
+          ]}
+          aria-label="MISTY home"
+          title="Home"
+          aria-current={isHome ? "page" : undefined}
+        >
+          <img
+            class="site-header__home-icon"
+            src="/images/icons/home.png"
+            alt=""
+            width="18"
+            height="18"
+            aria-hidden="true"
+            decoding="async"
+          />
+        </a>
+
+        <button
+          type="button"
+          class="site-header__menu-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          data-menu-toggle
+        >
+          <span class="visually-hidden">Menu</span>
+          <span class="site-header__menu-icon" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
 
     <div class="site-header__rule" aria-hidden="true"></div>
 
     <nav class="site-header__nav" id="site-nav" aria-label="Primary">
       <ul class="site-header__list">
+        <li class="site-header__home-item">
+          <a
+            href="/"
+            class:list={[
+              "site-header__home",
+              "site-header__home--nav",
+              { "is-active": isHome },
+            ]}
+            aria-label="MISTY home"
+            title="Home"
+            aria-current={isHome ? "page" : undefined}
+          >
+            <img
+              class="site-header__home-icon"
+              src="/images/icons/home.png"
+              alt=""
+              width="18"
+              height="18"
+              aria-hidden="true"
+              decoding="async"
+            />
+          </a>
+        </li>
         {
-          navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class:list={[
-                  "site-header__link",
-                  { "is-active": currentPath === item.href },
-                ]}
-                aria-current={currentPath === item.href ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
+          navItems.map((item) => {
+            const active = isNavActive(item.href);
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={["site-header__link", { "is-active": active }]}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </nav>
@@ -83,7 +136,7 @@ const currentPath = Astro.url.pathname;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.75rem 1rem;
     padding-bottom: 0.95rem;
   }
 
@@ -114,11 +167,18 @@ const currentPath = Astro.url.pathname;
     color: var(--text-muted);
   }
 
+  .site-header__actions {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.15rem;
+  }
+
   .site-header__menu-toggle {
     flex: 0 0 auto;
     width: 2.75rem;
     height: 2.75rem;
-    margin-top: 0.25rem;
     padding: 0;
     border: 1px solid var(--rule);
     background: var(--surface);
@@ -195,6 +255,47 @@ const currentPath = Astro.url.pathname;
     gap: 0.1rem;
   }
 
+  .site-header__home-item {
+    display: none;
+  }
+
+  .site-header__home {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .site-header__home-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    object-fit: contain;
+    display: block;
+    /* Source asset is white; tint to match charcoal nav text. */
+    filter: brightness(0) saturate(100%);
+    opacity: 0.88;
+  }
+
+  .site-header__home:hover .site-header__home-icon,
+  .site-header__home.is-active .site-header__home-icon {
+    opacity: 1;
+  }
+
+  .site-header__home--masthead.is-active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0.35rem;
+    width: 1rem;
+    height: 2px;
+    transform: translateX(-50%);
+    background: var(--navy);
+  }
+
   .site-header__link {
     display: block;
     padding: 0.75rem 0.1rem;
@@ -230,7 +331,11 @@ const currentPath = Astro.url.pathname;
     }
 
     .site-header__subtitle {
-      font-size: 1.1875rem; /* ~19px; +1px from prior 18px desktop peak */
+      font-size: 1.1875rem;
+    }
+
+    .site-header__actions {
+      display: none;
     }
 
     .site-header__menu-toggle {
@@ -239,7 +344,7 @@ const currentPath = Astro.url.pathname;
 
     .site-header__nav {
       display: block;
-      padding-block: 0.85rem 1rem;
+      padding-block: 0.55rem 0.7rem;
     }
 
     .site-header__list {
@@ -249,9 +354,42 @@ const currentPath = Astro.url.pathname;
       gap: 0.2rem 1.9rem;
     }
 
+    .site-header__home-item {
+      display: list-item;
+    }
+
+    .site-header__home--nav {
+      width: auto;
+      height: auto;
+      min-width: 2.25rem;
+      min-height: 2.25rem;
+      padding: 0.35rem 0.15rem 0.5rem;
+      justify-content: center;
+    }
+
+    .site-header__home--nav::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 1.05rem;
+      height: 2px;
+      transform: translateX(-50%);
+      background: transparent;
+    }
+
+    .site-header__home--nav.is-active::after {
+      background: var(--navy);
+    }
+
+    .site-header__home-icon {
+      width: 1.0625rem;
+      height: 1.0625rem;
+    }
+
     .site-header__link {
       position: relative;
-      padding: 0.4rem 0;
+      padding: 0.35rem 0 0.5rem;
       font-size: 1rem;
       font-weight: 500;
       letter-spacing: 0.02em;
@@ -263,7 +401,7 @@ const currentPath = Astro.url.pathname;
       position: absolute;
       left: 0;
       right: 0;
-      bottom: -0.85rem;
+      bottom: 0;
       height: 2px;
       background: transparent;
     }
