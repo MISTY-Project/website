@@ -119,11 +119,12 @@ import { surveyDesignPrinciples } from "../data/survey-design-principles";
     border-bottom: 2px solid transparent;
     background: transparent;
     color: var(--text-muted);
+    font-family: var(--font-sans);
     font-size: 0.9375rem;
     font-weight: 500;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     cursor: pointer;
-    line-height: 1.35;
+    line-height: 1.3;
     text-align: center;
   }
 
@@ -178,10 +179,11 @@ import { surveyDesignPrinciples } from "../data/survey-design-principles";
   .design-principles__mobile-label {
     margin: 0;
     text-align: center;
-    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
     font-weight: 600;
     color: var(--navy);
-    line-height: 1.35;
+    line-height: 1.3;
     padding-inline: 0.35rem;
     overflow-wrap: anywhere;
   }
@@ -192,11 +194,11 @@ import { surveyDesignPrinciples } from "../data/survey-design-principles";
     min-width: 0;
   }
 
+  /* Match Homepage `.science-goals__text` panel typography (UI sans, muted) */
   .design-principles__panel-body {
-    font-family: var(--font-serif);
-    font-size: 1.0625rem;
-    line-height: 1.68;
-    color: var(--text);
+    font-family: var(--font-sans);
+    color: var(--text-muted);
+    line-height: 1.65;
   }
 
   .design-principles__panel-body p {
@@ -244,11 +246,6 @@ import { surveyDesignPrinciples } from "../data/survey-design-principles";
 
     .design-principles__content {
       padding: 1.7rem 1.75rem 1.85rem;
-    }
-
-    .design-principles__panel-body {
-      font-size: 1.125rem;
-      line-height: 1.7;
     }
   }
 
