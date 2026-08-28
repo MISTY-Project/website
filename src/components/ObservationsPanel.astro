@@ -1,0 +1,980 @@
+---
+const categories = [
+  { id: "ground-ifu", label: "Ground-based IFU" },
+  { id: "hst-jwst", label: "HST + JWST imaging" },
+] as const;
+
+const instruments = [
+  { id: "magellan", label: "Magellan" },
+  { id: "keck", label: "Keck" },
+] as const;
+
+const placeholder = "[To be supplied]";
+
+const magellanRows = [
+  { characteristic: "Configuration", llamas: " ", ifum: "STD(80) + HiRes" },
+  { characteristic: "Field of view", llamas: "37''×37''", ifum: "22''×24''" },
+  { characteristic: "Fiber size", llamas: "0.75''", ifum: "1.05''" },
+  {
+    characteristic: "Wavelength coverage",
+    llamas: "3500 - 10,000 Å",
+    ifum: "6532 - 6750 Å",
+  },
+  {
+    characteristic: "Spectral resolution",
+    llamas: "R = 2000",
+    ifum: "R = 28,000",
+  },
+  {
+    characteristic: "Primary MISTY measurements",
+    llamas: "Metallicity and ionization diagnostics",
+    ifum: "Ionized-gas kinematics",
+  },
+] as const;
+
+const keckRows = [
+  { characteristic: "Configuration", lores: "medium slicer + BL/RL", hires: "small slicer + RH1" },
+  { characteristic: "Field of view", lores: "16.5''× 20.4''", hires: "8.4''× 20.4''" },
+  { characteristic: "Spatial sampling", lores: "0.7''", hires: "0.7''" },
+  {
+    characteristic: "Wavelength coverage",
+    lores: "3500 - 10,000 Å",
+    hires: "6240 – 6800 Å",
+  },
+  {
+    characteristic: "Spectral resolution",
+    lores: "R = 2000",
+    hires: "R = 17,000",
+  },
+  {
+    characteristic: "Primary MISTY measurements",
+    lores: "Metallicity and ionization diagnostics",
+    hires: "Ionized-gas kinematics",
+  },
+] as const;
+
+const bandsAlt =
+  "Illustration of HST and JWST imaging bands used for MISTY galaxies.";
+const comparisonAlt =
+  "Comparison of information provided by ground-based optical integral-field spectroscopy and space-based imaging.";
+const sampleAlt =
+  "Comparison of the MISTY HST sample with related resolved-galaxy imaging samples.";
+---
+
+<section
+  class="observations-panel"
+  aria-labelledby="observations-description-heading"
+  data-observations-panel
+>
+  <div class="observations-panel__shell">
+    <div
+      class="observations-panel__tabs"
+      role="tablist"
+      aria-label="Observation categories"
+      data-obs-tabs
+    >
+      {
+        categories.map((category, index) => (
+          <button
+            type="button"
+            class:list={[
+              "observations-panel__tab",
+              { "is-active": index === 0 },
+            ]}
+            role="tab"
+            id={`obs-tab-${category.id}`}
+            aria-selected={index === 0 ? "true" : "false"}
+            aria-controls={`obs-panel-${category.id}`}
+            tabindex={index === 0 ? 0 : -1}
+            data-obs-tab={category.id}
+            data-obs-label={category.label}
+          >
+            {category.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="observations-panel__mobile-nav" data-obs-mobile-nav>
+      <button
+        type="button"
+        class="observations-panel__arrow"
+        aria-label="Previous observation category"
+        data-obs-prev
+        disabled
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+      <p class="observations-panel__mobile-label" data-obs-mobile-label>
+        {categories[0].label}
+      </p>
+      <button
+        type="button"
+        class="observations-panel__arrow"
+        aria-label="Next observation category"
+        data-obs-next
+      >
+        <span aria-hidden="true">›</span>
+      </button>
+    </div>
+
+    <div class="observations-panel__content">
+      <div
+        class="observations-panel__category is-active"
+        role="tabpanel"
+        id="obs-panel-ground-ifu"
+        aria-labelledby="obs-tab-ground-ifu"
+        data-obs-panel="ground-ifu"
+      >
+        <div class="observations-panel__prose">
+          <p>
+            MISTY uses ground-based optical integral-field spectroscopy to map
+            the ionized gas and stellar populations of nearby dwarf galaxies at
+            spatial resolutions of 100–150&nbsp;pc. Observations are carried out
+            in two complementary spectral modes. A medium-spectral-resolution mode
+            provides broad wavelength coverage (3500–10,000&nbsp;Å), enabling
+            measurements of multiple emission lines to study ionized-gas conditions
+            and determine direct, temperature-sensitive chemical abundances. A
+            high-spectral-resolution mode covering selected emission lines traces
+            kinematics down to 10–20&nbsp;km&nbsp;s<sup>−1</sup>, enabling studies
+            of dwarf-galaxy kinematics, the identification of expanding shells, and
+            the characterization of galactic outflows.
+          </p>
+          <p>
+            As of August 2026, MISTY has obtained ground-based IFU observations
+            for 46 galaxies in both spectral modes. The survey is designed to reach 
+            approximately 200 galaxies, with about 100 observed from Magellan and 
+            about 100 from Keck. 
+          </p>
+        </div>
+
+        <div
+          class="observations-panel__instruments"
+          role="tablist"
+          aria-label="Ground-based IFU instruments"
+          data-instrument-tabs
+        >
+          {
+            instruments.map((instrument, index) => (
+              <button
+                type="button"
+                class:list={[
+                  "observations-panel__instrument",
+                  { "is-active": index === 0 },
+                ]}
+                role="tab"
+                id={`instrument-tab-${instrument.id}`}
+                aria-selected={index === 0 ? "true" : "false"}
+                aria-controls={`instrument-panel-${instrument.id}`}
+                tabindex={index === 0 ? 0 : -1}
+                data-instrument-tab={instrument.id}
+              >
+                {instrument.label}
+              </button>
+            ))
+          }
+        </div>
+
+        <div
+          class="observations-panel__instrument-panel is-active"
+          role="tabpanel"
+          id="instrument-panel-magellan"
+          aria-labelledby="instrument-tab-magellan"
+          data-instrument-panel="magellan"
+        >
+          <div class="observations-panel__prose">
+          <p>
+            MISTY employs two new fiber-fed, lenslet-array integral-field units
+            on Magellan with complementary capabilities. LLAMAS is used for the
+            medium-spectral-resolution mode, while IFUM is used for the
+            high-spectral-resolution mode. Most galaxies require a single IFU 
+            pointing to cover the main extent of the galaxy, although some 
+            require two or three pointings.
+          </p>
+          </div>
+
+          <table class="observations-table">
+            <caption>Magellan IFU configurations used by MISTY</caption>
+            <thead>
+              <tr>
+                <th scope="col">Characteristic</th>
+                <th scope="col">LLAMAS</th>
+                <th scope="col">IFUM</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                magellanRows.map((row) => (
+                  <tr>
+                    <th scope="row">{row.characteristic}</th>
+                    <td>{row.llamas}</td>
+                    <td>
+                      {row.characteristic === "Wavelength coverage" ? (
+                        <>
+                          6532 -<br class="observations-mobile-break" />6750 Å
+                        </>
+                      ) : (
+                        row.ifum
+                      )}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="observations-panel__instrument-panel"
+          role="tabpanel"
+          id="instrument-panel-keck"
+          aria-labelledby="instrument-tab-keck"
+          hidden
+          data-instrument-panel="keck"
+        >
+          <div class="observations-panel__prose">
+            <p>
+              MISTY uses the Keck Cosmic Web Imager (KCWI), an image slicer IFU, 
+              in two configurations to provide the medium- and high-spectral-resolution
+              modes. Galaxies require 1-3 pointings to cover their main extent.
+            </p>
+          </div>
+
+          <table class="observations-table">
+            <caption>KCWI configurations used by MISTY</caption>
+            <thead>
+              <tr>
+                <th scope="col">Characteristic</th>
+                <th scope="col">Medium-R</th>
+                <th scope="col">High-R</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                keckRows.map((row) => (
+                  <tr>
+                    <th scope="row">{row.characteristic}</th>
+                    <td>{row.lores}</td>
+                    <td>{row.hires}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div
+        class="observations-panel__category"
+        role="tabpanel"
+        id="obs-panel-hst-jwst"
+        aria-labelledby="obs-tab-hst-jwst"
+        hidden
+        data-obs-panel="hst-jwst"
+      >
+        <div class="observations-panel__prose observations-panel__hst-jwst-body">
+          <p>
+            MISTY was awarded a large joint HST+JWST observing program in HST
+            Cycle 34 (HST program 18417; JWST program 12660). The program will
+            use HST/WFC3-UVIS and JWST/NIRCam to image 26 MISTY galaxies
+            spanning stellar masses of 10<sup>6.5</sup>–10<sup>8</sup>&nbsp;M<sub>☉</sub>&nbsp;
+            and metallicities of 2–20% solar. The selected filters, shown
+            below, will identify and characterize star clusters from deeply
+            embedded through exposed evolutionary stages using
+            ultraviolet-to-near-infrared photometry. Two narrowband filters will
+            map Hα and Paα emission across the galaxies, resolving ionized gas
+            around young clusters and enabling estimates of dust reddening. A
+            medium-band filter will identify PAH emission in the
+            3.3&nbsp;μm feature, tracing small carbonaceous grains typically
+            associated with neutral and molecular gas.
+          </p>
+
+          <figure class="observations-figure">
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcset="/images/observations/HST_JWST_bands_illustration_mobile.png"
+              />
+              <img
+                src="/images/observations/HST_JWST_bands_illustration.png"
+                alt={bandsAlt}
+                width="1600"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption class="observations-figcaption">
+              HST and JWST imaging bands used to characterize the MISTY galaxies.
+            </figcaption>
+          </figure>
+
+          <p>
+            The angular resolution of HST and JWST will yield maps with physical
+            resolutions of approximately 10&nbsp;pc, providing a substantially
+            sharper view of stellar populations and the interstellar medium than
+            is possible from the ground, as illustrated below. The space-based
+            data will enable the identification of star clusters, resolve the
+            structure of ionized gas, and reveal feedback-driven structures. The
+            data shown below are adapted from HST program 15114, which includes
+            one of the MISTY HST+JWST galaxies.
+          </p>
+
+          <figure class="observations-figure">
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcset="/images/observations/comparison_ground_to_space_based_mobile.png"
+              />
+              <img
+                src="/images/observations/comparison_ground_to_space_based.png"
+                alt={comparisonAlt}
+                width="1600"
+                height="900"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption class="observations-figcaption">
+              Comparison of complementary information from ground-based optical
+              IFU observations and space-based imaging.
+            </figcaption>
+          </figure>
+
+          <figure
+            class="observations-space-sample-figure observations-space-sample-figure--desktop"
+          >
+            <img
+              src="/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png"
+              alt={sampleAlt}
+              width="1600"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="observations-figcaption">
+              Comparison of the MISTY HST sample with related resolved-galaxy
+              imaging samples.
+            </figcaption>
+          </figure>
+
+          <p>
+            This program adds to a substantial community investment in mapping
+            the baryon cycle across stellar mass and metallicity. MISTY joins
+            the large PHANGS and LEGUS programs, including FEAST and FLEET,
+            which have obtained high-angular-resolution HST and JWST imaging of
+            nearby, more massive galaxies. Together, these data will help
+            establish a coherent and general picture of star-formation regulation
+            within the complex interstellar medium across four orders of
+            magnitude in stellar mass and two orders of magnitude in
+            metallicity.
+          </p>
+
+          <figure
+            class="observations-space-sample-figure observations-space-sample-figure--mobile"
+          >
+            <img
+              src="/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png"
+              alt={sampleAlt}
+              width="1600"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="observations-figcaption">
+              Comparison of the MISTY HST sample with related resolved-galaxy
+              imaging samples.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .observations-panel {
+    min-width: 0;
+  }
+
+  .observations-panel__shell {
+    background-color: var(--surface-muted);
+    border: 1px solid var(--rule);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .observations-panel__tabs {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-inline: 0.5rem;
+  }
+
+  .observations-panel__tab {
+    appearance: none;
+    flex: 1 1 auto;
+    min-height: 2.95rem;
+    margin: 0;
+    padding: 0.8rem 0.95rem 0.75rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .observations-panel__tab:hover {
+    color: var(--text);
+  }
+
+  .observations-panel__tab.is-active {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+    font-weight: 600;
+  }
+
+  .observations-panel__mobile-nav {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 3.25rem;
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .observations-panel__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+    color: var(--navy);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .observations-panel__arrow:hover:not(:disabled) {
+    border-color: var(--navy);
+  }
+
+  .observations-panel__arrow:disabled {
+    color: color-mix(in srgb, var(--text-muted) 55%, transparent);
+    border-color: color-mix(in srgb, var(--rule) 80%, transparent);
+    background: color-mix(in srgb, var(--surface-muted) 70%, var(--surface));
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .observations-panel__mobile-label {
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+    padding-inline: 0.35rem;
+    overflow-wrap: anywhere;
+  }
+
+  .observations-panel__content {
+    padding: 1.35rem 1.2rem 1.55rem;
+    background: var(--surface);
+    min-width: 0;
+  }
+
+  .observations-panel__category[hidden],
+  .observations-panel__instrument-panel[hidden] {
+    display: none;
+  }
+
+  .observations-panel__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .observations-panel__prose p {
+    margin: 0 0 1.15em;
+  }
+
+  .observations-panel__prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .observations-panel__instruments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 1.25rem 0 1.15rem;
+    padding: 0.2rem;
+    border: 1px solid var(--rule);
+    background: var(--surface-muted);
+    max-width: 100%;
+  }
+
+  .observations-panel__instrument {
+    appearance: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .observations-panel__instrument:hover {
+    color: var(--text);
+  }
+
+  .observations-panel__instrument.is-active {
+    color: var(--navy);
+    font-weight: 600;
+    background: var(--surface-strong);
+    border-color: var(--navy);
+  }
+
+  .observations-table {
+    width: 100%;
+    margin: 1.25rem 0 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .observations-table caption {
+    caption-side: top;
+    text-align: left;
+    margin: 0 0 0.65rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--navy);
+  }
+
+  .observations-table th,
+  .observations-table td {
+    padding: 0.45rem 0.4rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    text-align: left;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .observations-table thead th {
+    font-weight: 600;
+    color: var(--navy);
+    border-top: 0;
+  }
+
+  .observations-table th[scope="row"] {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .observations-table col.characteristic,
+  .observations-table th[scope="row"],
+  .observations-table thead th:first-child {
+    width: 42%;
+  }
+
+  .observations-table thead th:not(:first-child),
+  .observations-table td {
+    width: 29%;
+  }
+
+  .observations-figure {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5rem 0 0;
+    float: none;
+  }
+
+  .observations-figure:first-of-type {
+    margin-top: 1.35rem;
+  }
+
+  .observations-figure picture,
+  .observations-figure img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .observations-figure img {
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+  }
+
+  .observations-panel__hst-jwst-body {
+    display: block;
+  }
+
+  .observations-panel__hst-jwst-body .observations-figure,
+  .observations-panel__hst-jwst-body .observations-space-sample-figure--mobile {
+    margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .observations-space-sample-figure--desktop {
+    display: none;
+  }
+
+  .observations-space-sample-figure--desktop img,
+  .observations-space-sample-figure--mobile img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+  }
+
+  .observations-space-sample-figure--mobile {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    float: none;
+    margin: 1.5rem 0 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .observations-figcaption {
+    margin-top: 0.55rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  .observations-mobile-break {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .observations-mobile-break {
+      display: block;
+    }
+
+    .observations-space-sample-figure--desktop {
+      display: none;
+    }
+
+    .observations-space-sample-figure--mobile {
+      display: block;
+      float: none;
+      width: 100%;
+      max-width: none;
+      margin: 1.5rem 0 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .observations-table {
+      width: 100%;
+      table-layout: fixed;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .observations-table th,
+    .observations-table td {
+      padding: 0.35rem 0.28rem;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .observations-table thead th:first-child,
+    .observations-table th[scope="row"] {
+      width: 42%;
+    }
+
+    .observations-table thead th:not(:first-child),
+    .observations-table td {
+      width: 29%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .observations-panel__mobile-nav {
+      display: none;
+    }
+
+    .observations-panel__tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+      padding-inline: 0.5rem;
+    }
+
+    .observations-panel__tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 3.35rem;
+      box-sizing: border-box;
+      white-space: normal;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    .observations-panel__content {
+      padding: 1.7rem 1.75rem 1.85rem;
+    }
+
+    .observations-panel__prose {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .observations-panel__instruments {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      width: auto;
+      max-width: 100%;
+    }
+
+    .observations-panel__instrument {
+      flex: 0 0 auto;
+      min-width: 6.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .observations-table {
+      font-size: 0.875rem;
+    }
+
+    .observations-table th,
+    .observations-table td {
+      padding: 0.55rem 0.65rem;
+    }
+
+    .observations-figcaption {
+      font-size: 0.875rem;
+    }
+
+    .observations-space-sample-figure--desktop {
+      display: block;
+      float: right;
+      box-sizing: border-box;
+      width: 50%;
+      max-width: 50%;
+      margin-top: 0.5rem;
+      margin-right: 0;
+      margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+      margin-left: clamp(1.5rem, 3vw, 3rem);
+    }
+
+    .observations-space-sample-figure--mobile {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function getCategoryTabs(root: Element) {
+    return Array.from(root.querySelectorAll<HTMLButtonElement>("[data-obs-tab]"));
+  }
+
+  function getInstrumentTabs(root: Element) {
+    return Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-instrument-tab]"),
+    );
+  }
+
+  function activateCategory(root: Element, categoryId: string) {
+    const tabs = getCategoryTabs(root);
+    const panels = root.querySelectorAll<HTMLElement>("[data-obs-panel]");
+    const label = root.querySelector<HTMLElement>("[data-obs-mobile-label]");
+    const prev = root.querySelector<HTMLButtonElement>("[data-obs-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-obs-next]");
+
+    let activeIndex = 0;
+
+    tabs.forEach((tab, index) => {
+      const isActive = tab.dataset.obsTab === categoryId;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+      if (isActive) {
+        activeIndex = index;
+        if (label) {
+          label.textContent = tab.dataset.obsLabel ?? tab.textContent ?? "";
+        }
+      }
+    });
+
+    panels.forEach((panel) => {
+      const isActive = panel.dataset.obsPanel === categoryId;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+
+    if (prev) prev.disabled = activeIndex <= 0;
+    if (next) next.disabled = activeIndex >= tabs.length - 1;
+  }
+
+  function activateInstrument(root: Element, instrumentId: string) {
+    const tabs = getInstrumentTabs(root);
+    const panels = root.querySelectorAll<HTMLElement>("[data-instrument-panel]");
+
+    tabs.forEach((tab) => {
+      const isActive = tab.dataset.instrumentTab === instrumentId;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    panels.forEach((panel) => {
+      const isActive = panel.dataset.instrumentPanel === instrumentId;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+  }
+
+  document.querySelectorAll("[data-observations-panel]").forEach((root) => {
+    const tabs = getCategoryTabs(root);
+    const instrumentTabs = getInstrumentTabs(root);
+    const prev = root.querySelector<HTMLButtonElement>("[data-obs-prev]");
+    const next = root.querySelector<HTMLButtonElement>("[data-obs-next]");
+
+    const getActiveIndex = () =>
+      Math.max(
+        0,
+        tabs.findIndex((tab) => tab.classList.contains("is-active")),
+      );
+
+    root.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+
+      const categoryTab = target?.closest<HTMLButtonElement>("[data-obs-tab]");
+      if (categoryTab && root.contains(categoryTab) && categoryTab.dataset.obsTab) {
+        activateCategory(root, categoryTab.dataset.obsTab);
+        return;
+      }
+
+      const instrumentTab =
+        target?.closest<HTMLButtonElement>("[data-instrument-tab]");
+      if (
+        instrumentTab &&
+        root.contains(instrumentTab) &&
+        instrumentTab.dataset.instrumentTab
+      ) {
+        activateInstrument(root, instrumentTab.dataset.instrumentTab);
+      }
+    });
+
+    prev?.addEventListener("click", () => {
+      if (prev.disabled) return;
+      const target = tabs[getActiveIndex() - 1];
+      if (!target?.dataset.obsTab) return;
+      activateCategory(root, target.dataset.obsTab);
+    });
+
+    next?.addEventListener("click", () => {
+      if (next.disabled) return;
+      const target = tabs[getActiveIndex() + 1];
+      if (!target?.dataset.obsTab) return;
+      activateCategory(root, target.dataset.obsTab);
+    });
+
+    root.addEventListener("keydown", (event) => {
+      const target = event.target as HTMLElement | null;
+
+      const categoryTab = target?.closest<HTMLButtonElement>("[data-obs-tab]");
+      if (categoryTab && root.contains(categoryTab)) {
+        const index = tabs.indexOf(categoryTab);
+        if (index < 0) return;
+
+        let nextIndex = index;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          nextIndex = Math.min(index + 1, tabs.length - 1);
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          nextIndex = Math.max(index - 1, 0);
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = tabs.length - 1;
+        } else {
+          return;
+        }
+
+        event.preventDefault();
+        const nextTab = tabs[nextIndex];
+        if (!nextTab?.dataset.obsTab) return;
+        nextTab.focus();
+        activateCategory(root, nextTab.dataset.obsTab);
+        return;
+      }
+
+      const instrumentTab =
+        target?.closest<HTMLButtonElement>("[data-instrument-tab]");
+      if (instrumentTab && root.contains(instrumentTab)) {
+        const index = instrumentTabs.indexOf(instrumentTab);
+        if (index < 0) return;
+
+        let nextIndex = index;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          nextIndex = Math.min(index + 1, instrumentTabs.length - 1);
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          nextIndex = Math.max(index - 1, 0);
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = instrumentTabs.length - 1;
+        } else {
+          return;
+        }
+
+        event.preventDefault();
+        const nextTab = instrumentTabs[nextIndex];
+        if (!nextTab?.dataset.instrumentTab) return;
+        nextTab.focus();
+        activateInstrument(root, nextTab.dataset.instrumentTab);
+      }
+    });
+
+    if (tabs[0]?.dataset.obsTab) {
+      activateCategory(root, tabs[0].dataset.obsTab);
+    }
+    if (instrumentTabs[0]?.dataset.instrumentTab) {
+      activateInstrument(root, instrumentTabs[0].dataset.instrumentTab);
+    }
+  });
+</script>

@@ -1,0 +1,141 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ObservationsPanel from "../components/ObservationsPanel.astro";
+
+const overviewAlt =
+  "Examples of resolved properties from MISTY optical integral-field spectroscopy and HST and JWST imaging.";
+---
+
+<BaseLayout
+  title="Observations"
+  description="MISTY observations: ground-based optical IFU spectroscopy and HST and JWST imaging."
+>
+  <article class="observations-page">
+    <div class="observations-page__prose">
+      <p>
+        Probing the baryon cycle requires observations across a range of spatial
+        scales and wavelengths. MISTY currently combines ground-based optical
+        integral-field spectroscopy from Magellan and Keck with space-based
+        imaging from HST and JWST. Work is also underway to expand the
+        observational program toward near- to mid-infrared spectroscopy and
+        H&nbsp;I 21&nbsp;cm measurements. The figure below illustrates some of 
+        the observations and derived properties for one of the MISTY galaxies.
+      </p>
+    </div>
+
+    <figure class="observations-page__overview">
+      <picture>
+        <source
+          media="(max-width: 767px)"
+          srcset="/images/observations/ifu-and-imaging-derived-properties-mobile.png"
+        />
+        <img
+          src="/images/observations/ifu-and-imaging-derived-properties.png"
+          alt={overviewAlt}
+          width="1800"
+          height="1200"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <figcaption class="observations-page__figcaption">
+        Examples of spatially resolved properties derived from MISTY optical IFU
+        observations and broad- and narrow-band HST imaging.
+      </figcaption>
+    </figure>
+
+    <h2 id="observations-description-heading" class="section-title">
+      Description of observations
+    </h2>
+
+    <div class="observations-page__panel">
+      <ObservationsPanel />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .observations-page {
+    max-width: var(--reading-max);
+    padding-top: 1.25rem;
+  }
+
+  .observations-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .observations-page__prose p {
+    margin: 0 0 1.15em;
+  }
+
+  .observations-page__prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .observations-page__overview {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5rem 0 0;
+    float: none;
+  }
+
+  .observations-page__overview picture,
+  .observations-page__overview img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .observations-page__overview img {
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+  }
+
+  .observations-page__figcaption {
+    margin-top: 0.55rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  .observations-page .section-title {
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .observations-page__panel {
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .observations-page {
+      padding-top: 1.65rem;
+    }
+
+    .observations-page__prose {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .observations-page__overview {
+      margin-top: 1.75rem;
+    }
+
+    .observations-page__figcaption {
+      font-size: 0.875rem;
+    }
+
+    .observations-page .section-title {
+      margin-top: 3rem;
+      margin-bottom: 1.4rem;
+    }
+  }
+</style>

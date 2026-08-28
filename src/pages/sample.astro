@@ -24,7 +24,7 @@ const selectionAlt =
         At the distances targeted by MISTY, DESI is complete for non-quiescent
         systems down to stellar masses of approximately 10<sup>6</sup>&nbsp;M<sub>☉</sub>,
         above μ<sub>V</sub>&nbsp;≈&nbsp;25&nbsp;mag&nbsp;arcsec<sup>−2</sup> and
-        subject to emission-line detection limits. We use the dwarf-galaxy{" "}
+        subject to emission-line detection limits. We use the DESI dwarf-galaxy{" "}
         <a
           href="https://virajvman.github.io/desidwarfs_webapp/index.html"
           target="_blank"
@@ -55,22 +55,27 @@ const selectionAlt =
         selects galaxies within 30&nbsp;Mpc and with stellar masses of
         10<sup>6</sup>–10<sup>8.5</sup>&nbsp;M<sub>☉</sub>. To construct a
         representative population of dwarf galaxies, we sample uniformly in
-        the specific-star-formation-rate–metallicity plane. Metallicities are
-        estimated from DESI integrated spectra within the
-        1.5&nbsp;arcsec-diameter fiber aperture, using the direct
+        the specific-star-formation-rate–metallicity plane. Stellar masses
+        are estimated from broadband photometry, while star-formation rates
+        are derived from the Hα flux measured within the 1.5&nbsp;arcsec-diameter
+        fiber aperture and aperture-corrected using broadband photometry.
+        Metallicities are estimated from DESI integrated spectra within the
+        1.5&nbsp;arcsec-diameter fiber aperture, using the direct,
         temperature-sensitive method where possible and the S-cal strong-line
         calibration otherwise.
       </p>
 
-      <p>
-        MISTY also samples the full range of large-scale environments, from
-        isolated dwarfs through galaxies in overdense regions to satellites
-        and interacting systems. The science goals require the detection of
-        weak auroral lines in individual spaxels of the optical IFU data
-        cubes. This requirement imposes an emission-line flux threshold
-        compatible with observations from Magellan and Keck, while telescope
-        location also determines which targets are observable.
-      </p>
+    <p>
+      MISTY also samples the full range of large-scale environments, from
+      isolated dwarfs through galaxies in overdense regions to satellites
+      and interacting systems. The science goals require the detection of
+      weak auroral lines in individual spaxels of the optical IFU data
+      cubes. This requirement imposes an emission-line flux threshold
+      compatible with observations from Magellan and Keck (<em>f</em>(Hα) &gt; 10<sup>−15</sup> erg s<sup>−1</sup> cm<sup>−2</sup>&nbsp;
+      for Magellan and <em>f</em>(Hα) &gt; 3 × 10<sup>−16</sup> erg s<sup>−1</sup>
+      cm<sup>−2</sup> for Keck), while telescope
+      location also determines which targets are observable.
+    </p>
     </div>
 
     <figure class="sample-selection-figure">
