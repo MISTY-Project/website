@@ -1,0 +1,138 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { relatedEfforts } from "../data/related-efforts";
+
+const contactHref = "mailto:";
+---
+
+<BaseLayout
+  title="Related Efforts"
+  description="Related surveys and programs connected to MISTY science."
+>
+  <article class="related-efforts-page">
+    <div class="related-efforts-page__prose">
+      <p>
+        Resolved nearby-galaxy studies of the baryon cycle, metal life cycle,
+        star-formation feedback, dark-matter halos, and dwarf-galaxy evolution
+        form a rich field with many exciting surveys and results. Below is a
+        selection of related efforts. This list is not comprehensive, and we
+        welcome suggestions for efforts that should be included; please{" "}
+        <a href={contactHref}>contact us</a>.
+      </p>
+    </div>
+
+    <ol class="related-efforts__list">
+      {
+        relatedEfforts.map((effort) => (
+          <li>
+            <strong>{effort.fullName}</strong> (
+            {effort.acronym ? (
+              <>
+                {effort.acronym};{" "}
+              </>
+            ) : null}
+            <a
+              href={effort.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {effort.linkLabel}
+            </a>
+            ) — <span set:html={effort.description} />
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</BaseLayout>
+
+<style>
+  .related-efforts-page {
+    max-width: var(--reading-max);
+    padding-top: 1.25rem;
+  }
+
+  .related-efforts-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .related-efforts-page__prose p {
+    margin: 0;
+  }
+
+  .related-efforts-page__prose a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .related-efforts-page__prose a:hover {
+    color: var(--navy-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  .related-efforts__list {
+    margin: 1.75rem 0 0;
+    padding-left: 2rem;
+    list-style-type: decimal;
+    list-style-position: outside;
+  }
+
+  .related-efforts__list > li {
+    display: list-item;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+    overflow-wrap: anywhere;
+    padding-left: 0.35rem;
+  }
+
+  .related-efforts__list > li::marker {
+    color: var(--text);
+  }
+
+  .related-efforts__list > li + li {
+    margin-top: 1.15rem;
+  }
+
+  .related-efforts__list > li strong {
+    font-weight: 600;
+  }
+
+  .related-efforts__list > li a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .related-efforts__list > li a:hover {
+    color: var(--navy-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .related-efforts-page {
+      padding-top: 1.65rem;
+    }
+
+    .related-efforts-page__prose,
+    .related-efforts__list > li {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .related-efforts__list {
+      margin-top: 2rem;
+    }
+
+    .related-efforts__list > li + li {
+      margin-top: 1.25rem;
+    }
+  }
+</style>

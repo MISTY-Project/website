@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const contactHref = "mailto:";
+---
+
+<BaseLayout
+  title="Team"
+  description="The MISTY collaboration: co-PIs, team members, and acknowledgements."
+>
+  <article class="team-page">
+    <section class="team-page__section" aria-labelledby="team-co-pis-heading">
+      <h2 id="team-co-pis-heading" class="section-title">Co-PIs</h2>
+      <ul class="team-page__list">
+        <li>Dalya Baron (Hebrew University)</li>
+        <li>Jaeyeon Kim (Kyung Hee University)</li>
+        <li>Viraj Manwadkar (Stanford University)</li>
+      </ul>
+    </section>
+
+    <section class="team-page__section" aria-labelledby="team-members-heading">
+      <h2 id="team-members-heading" class="section-title">Team members</h2>
+      <ul class="team-page__list">
+        <li>Hajar Aziz (UC Riverside)</li>
+        <li>Gaby Canalizo (UC Riverside)</li>
+        <li>Susan Clark (Stanford University)</li>
+        <li>Adam Leroy (The Ohio State University)</li>
+        <li>Sergio Martin-Alvarez (University of Oklahoma)</li>
+        <li>Mario Mateo (University of Michigan)</li>
+        <li>Gwen Rudie (Carnegie Observatories)</li>
+        <li>Karin Sandstrom (UC San Diego)</li>
+        <li>Peter Senchyna (Carnegie Observatories)</li>
+        <li>Risa Wechsler (Stanford University)</li>
+      </ul>
+    </section>
+
+    <section class="team-page__section" aria-labelledby="team-join-heading">
+      <h2 id="team-join-heading" class="section-title">Join the team</h2>
+      <div class="team-page__prose">
+        <p>
+          MISTY is seeking junior scientists, including graduate students and
+          postdoctoral researchers, to join the team. Job listings will be posted
+          in the AAS Job Register in fall 2026. If you are interested in learning
+          more, please{" "}
+          <a href={contactHref}>contact us</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="team-page__section" aria-labelledby="team-acknowledgements-heading">
+      <h2 id="team-acknowledgements-heading" class="section-title">
+        Acknowledgements
+      </h2>
+      <div class="team-page__prose">
+        <p>
+          The MISTY team is grateful to the Kavli Institute for Particle
+          Astrophysics and Cosmology (KIPAC), Carnegie Observatories, and the
+          University of Michigan Time Allocation Committees for their continued
+          support of the program through the allocation of Magellan observing
+          nights. We also thank the University of California Time Allocation
+          Committee for the allocation of Keck observing nights, and the HST Time
+          Allocation Committee and the Space Telescope Science Institute (STScI)
+          for supporting MISTY’s joint HST+JWST program.
+        </p>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .team-page {
+    max-width: var(--reading-max);
+    padding-top: 1.25rem;
+  }
+
+  .team-page__section + .team-page__section {
+    margin-top: 2.5rem;
+    padding-top: 0;
+  }
+
+  .team-page .section-title {
+    margin: 0 0 1rem;
+  }
+
+  .team-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .team-page__prose p {
+    margin: 0;
+  }
+
+  .team-page__prose a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .team-page__prose a:hover {
+    color: var(--navy-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  .team-page__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .team-page__list li {
+    display: inline;
+    overflow-wrap: anywhere;
+  }
+
+  .team-page__list li:not(:last-child)::after {
+    content: " · ";
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 767px) {
+    .team-page__list li {
+      display: list-item;
+      margin-bottom: 0.35em;
+    }
+
+    .team-page__list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .team-page__list li:not(:last-child)::after {
+      content: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .team-page {
+      padding-top: 1.65rem;
+    }
+
+    .team-page__section + .team-page__section {
+      margin-top: 3rem;
+    }
+
+    .team-page .section-title {
+      margin-bottom: 1.15rem;
+    }
+
+    .team-page__prose,
+    .team-page__list {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+  }
+</style>

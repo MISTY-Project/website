@@ -1,0 +1,163 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { publications } from "../data/publications";
+---
+
+<BaseLayout
+  title="Publications"
+  description="MISTY survey publications and forthcoming results."
+>
+  <article class="publications-page">
+    <div class="publications-page__prose">
+      <p>
+        MISTY is finalizing the reduction and analysis of the first 46 galaxies
+        observed with optical integral-field spectroscopy. We anticipate the
+        first publications in the first half of 2027. Stay tuned.
+      </p>
+    </div>
+
+    <section
+      class="publications-page__section"
+      aria-labelledby="publications-heading"
+    >
+      <h2 id="publications-heading" class="section-title">Publications</h2>
+
+      {
+        publications.length > 0 && (
+          <ol class="publications-page__list">
+            {publications.map((publication) => (
+              <li class="publications-page__item">
+                <p class="publications-page__title">{publication.title}</p>
+                <p class="publications-page__meta">
+                  {publication.authors} ({publication.year}
+                  {publication.journal ? `, ${publication.journal}` : ""})
+                </p>
+                {(publication.doi || publication.url) && (
+                  <p class="publications-page__links">
+                    {publication.doi && (
+                      <a
+                        href={`https://doi.org/${publication.doi}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        DOI
+                      </a>
+                    )}
+                    {publication.doi && publication.url && (
+                      <span aria-hidden="true"> · </span>
+                    )}
+                    {publication.url && (
+                      <a
+                        href={publication.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Article
+                      </a>
+                    )}
+                  </p>
+                )}
+                {publication.status && (
+                  <p class="publications-page__status">{publication.status}</p>
+                )}
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .publications-page {
+    max-width: var(--reading-max);
+    padding-top: 1.25rem;
+  }
+
+  .publications-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .publications-page__prose p {
+    margin: 0;
+  }
+
+  .publications-page__section {
+    margin-top: 2.5rem;
+  }
+
+  .publications-page .section-title {
+    margin: 0;
+  }
+
+  .publications-page__list {
+    margin: 1.15rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .publications-page__item + .publications-page__item {
+    margin-top: 1.35rem;
+  }
+
+  .publications-page__title,
+  .publications-page__meta,
+  .publications-page__links,
+  .publications-page__status {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .publications-page__meta,
+  .publications-page__status {
+    margin-top: 0.35em;
+    color: var(--text-muted);
+  }
+
+  .publications-page__links {
+    margin-top: 0.35em;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+  }
+
+  .publications-page__links a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .publications-page__links a:hover {
+    color: var(--navy-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .publications-page {
+      padding-top: 1.65rem;
+    }
+
+    .publications-page__prose,
+    .publications-page__title,
+    .publications-page__meta,
+    .publications-page__status {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .publications-page__section {
+      margin-top: 3rem;
+    }
+
+    .publications-page__list {
+      margin-top: 1.25rem;
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Data Products"
+  description="MISTY survey data products and forthcoming map releases."
+>
+  <article class="data-products-page">
+    <div class="data-products-page__prose">
+      <p>
+        MISTY is finalizing the reduction and analysis of the first 46 galaxies
+        observed with optical integral-field spectroscopy. Alongside the first
+        publications, anticipated in the first half of 2027, we expect to release
+        two-dimensional maps of derived properties for the MISTY sample. Stay
+        tuned.
+      </p>
+    </div>
+
+    <section
+      class="data-products-page__section"
+      aria-labelledby="data-products-heading"
+    >
+      <h2 id="data-products-heading" class="section-title">Data products</h2>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .data-products-page {
+    max-width: var(--reading-max);
+    padding-top: 1.25rem;
+  }
+
+  .data-products-page__prose {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+  }
+
+  .data-products-page__prose p {
+    margin: 0;
+  }
+
+  .data-products-page__section {
+    margin-top: 2.5rem;
+  }
+
+  .data-products-page .section-title {
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .data-products-page {
+      padding-top: 1.65rem;
+    }
+
+    .data-products-page__prose {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    .data-products-page__section {
+      margin-top: 3rem;
+    }
+  }
+</style>
