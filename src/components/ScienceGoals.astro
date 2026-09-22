@@ -97,6 +97,12 @@ import { scienceGoals } from "../data/science-goals";
           >
             <h3 class="science-goals__title">{goal.title}</h3>
             <p class="science-goals__text">{goal.description}</p>
+            <p class="science-goals__measure-lead">MISTY will measure:</p>
+            <ul class="science-goals__measurements">
+              {goal.measurements.map((item) => (
+                <li set:html={item} />
+              ))}
+            </ul>
           </div>
         ))
       }
@@ -278,6 +284,31 @@ import { scienceGoals } from "../data/science-goals";
     line-height: 1.65;
   }
 
+  .science-goals__measure-lead {
+    margin: 1.1rem 0 0.45rem;
+    max-width: var(--reading-max);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    line-height: 1.45;
+  }
+
+  .science-goals__measurements {
+    margin: 0;
+    padding-left: 1.25rem;
+    max-width: var(--reading-max);
+    list-style: disc;
+    color: var(--text-muted);
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .science-goals__measurements li + li {
+    margin-top: 0.4rem;
+  }
+
   .science-goals__panel-body[hidden] {
     display: none;
   }
@@ -298,10 +329,22 @@ import { scienceGoals } from "../data/science-goals";
     .science-goals__tab {
       font-size: 1rem;
       padding-inline: 1.2rem;
+      white-space: normal;
+      max-width: 14.5rem;
+      text-wrap: balance;
     }
 
     .science-goals__content {
       padding: 1.7rem 1.75rem 1.85rem;
+    }
+
+    .science-goals__measure-lead {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+    }
+
+    .science-goals__measurements li + li {
+      margin-top: 0.45rem;
     }
   }
 </style>

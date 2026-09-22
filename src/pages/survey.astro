@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SurveyDesignPrinciples from "../components/SurveyDesignPrinciples.astro";
+import ScienceGoals from "../components/ScienceGoals.astro";
 ---
 
 <BaseLayout
@@ -11,35 +12,30 @@ import SurveyDesignPrinciples from "../components/SurveyDesignPrinciples.astro";
     <div class="survey-page__intro">
       <div class="survey-page__prose">
         <p>
-          MISTY is designed to establish a resolved view of the baryon cycle
-          across the low-metallicity regime. Low-mass galaxies dominate the
-          galaxy population by number, and the physical conditions that govern
-          their formation and evolution differ fundamentally from those in massive,
-          near-solar-metallicity systems. Metal-poor massive stars emit harder
-          ionizing radiation; reduced dust and metal content alter shielding,
-          cooling, and chemistry; and shallow gravitational potentials allow stellar
-          feedback to redistribute or expel gas more efficiently.
+          How do galaxies turn gas into stars, regulate their growth, and assemble 
+          their mass across cosmic time? At the heart of this question is the baryon cycle, 
+          the continual exchange of matter and energy between stars, the interstellar medium (ISM), 
+          and the large-scale circumgalactic environment. Gas cools and gravitationally collapses 
+          to form stars, while massive stars return energy and newly synthesized elements through 
+          radiation, winds, and supernovae, disrupting their natal clouds and recycling material 
+          within galaxies and into their surroundings.
         </p>
         <p>
-          Over the past decade, resolved multi-wavelength surveys have
-          transformed our understanding of the baryon cycle in nearby massive
-          galaxies. By mapping molecular clouds, H&nbsp;II regions, and young
-          star clusters on 10–100&nbsp;pc scales across entire galaxies, these
-          programs have constrained cloud lifetimes, gas–star overlap,
-          pre-supernova cloud dispersal, and variations in star-formation
-          efficiency. MISTY aims to provide the comprehensive counterpart for 
-          the low-mass, low-metallicity regime, where these processes remain far
-          less well constrained.
+          MISTY is designed to establish a resolved view of this cycle across the low-metallicity 
+          regime, where the physical conditions that govern galaxy formation and evolution differ 
+          fundamentally from those in massive, near-solar-metallicity systems. Metal-poor massive 
+          stars emit harder ionizing radiation; reduced dust and metal content alter shielding, 
+          cooling, and chemistry; and shallow gravitational potentials allow stellar feedback to 
+          redistribute or expel gas more efficiently.
         </p>
         <p>
-          MISTY is designed around two defining features of the baryon cycle: it operates
-          across a wide range of spatial scales and links stars, multiphase gas, and dust.
-          Understanding it therefore demands a multi-scale, multi-wavelength approach.
-          The formation and evolution of young star clusters, H&nbsp;II-region structure,
-          cloud dispersal, metal enrichment, and turbulence injection occur on scales of
-          approximately 10–100&nbsp;pc, while their cumulative effects on gas flows,
-          ionizing-radiation escape, galaxy-wide star formation, and chemical evolution
-          must be measured across entire galaxies. Characterizing stars, multiphase gas, 
+          MISTY is designed around two defining features of the baryon cycle: it operates across 
+          a wide range of spatial scales and links stars, multiphase gas, and dust. Understanding 
+          it therefore demands a multi-scale, multi-wavelength approach. The formation and evolution 
+          of young star clusters, H II-region structure, cloud dispersal, metal enrichment, and 
+          turbulence injection occur on scales of approximately 10–100 pc, while their cumulative 
+          effects on gas flows, ionizing-radiation escape, galaxy-wide star formation, and chemical 
+          evolution must be measured across entire galaxies. Characterizing stars, multiphase gas, 
           and dust further requires observations across the electromagnetic spectrum. 
         </p>
       </div>
@@ -47,6 +43,10 @@ import SurveyDesignPrinciples from "../components/SurveyDesignPrinciples.astro";
 
     <div class="survey-page__principles">
       <SurveyDesignPrinciples />
+    </div>
+
+    <div class="survey-page__science-goals">
+      <ScienceGoals />
     </div>
   </article>
 </BaseLayout>
@@ -75,6 +75,11 @@ import SurveyDesignPrinciples from "../components/SurveyDesignPrinciples.astro";
 
   .survey-page__principles {
     margin-top: 3rem; /* ~48px mobile separation */
+    padding-top: 0;
+  }
+
+  .survey-page__science-goals {
+    margin-top: clamp(3rem, 6vw, 5rem);
     padding-top: 0;
   }
 

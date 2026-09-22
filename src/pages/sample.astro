@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import GalaxyGallery from "../components/GalaxyGallery.astro";
 
 const censusAlt =
   "Scatter plot of the DESI spectroscopic census of dwarf galaxies, with each point marking a spectroscopically confirmed dwarf and a smaller pre-DESI comparison sample.";
@@ -14,17 +15,10 @@ const selectionAlt =
   <article class="sample-page">
     <div class="sample-content">
       <p>
-        MISTY selects its targets from the DESI dwarf-galaxy census. In its
-        first data release, DESI identified spectroscopically approximately
-        500,000 dwarf galaxies to z&nbsp;≤&nbsp;0.2. This number is expected to
-        grow to approximately 1,000,000 in the next data release.
-      </p>
-
-      <p>
-        At the distances targeted by MISTY, DESI is complete for non-quiescent
-        systems down to stellar masses of approximately 10<sup>6</sup>&nbsp;M<sub>☉</sub>,
-        above μ<sub>V</sub>&nbsp;≈&nbsp;25&nbsp;mag&nbsp;arcsec<sup>−2</sup> and
-        subject to emission-line detection limits. We use the DESI dwarf-galaxy{" "}
+        MISTY selects its targets primarily from DESI, which in its first data
+        release spectroscopically identified approximately 350,000 dwarf galaxies
+        to z&nbsp;≤&nbsp;0.2, a number expected to grow to approximately 1,000,000
+        over the full DESI survey. We use the DESI dwarf-galaxy{" "}
         <a
           href="https://virajvman.github.io/desidwarfs_webapp/index.html"
           target="_blank"
@@ -32,6 +26,15 @@ const selectionAlt =
         (Manwadkar et al., submitted), which provides photometry, emission-line
         flux measurements, star-formation rates, stellar masses, and additional
         derived properties.
+      </p>
+
+      <p>
+        At the distances targeted by MISTY, DESI detects star-forming systems
+        down to stellar masses of approximately 10<sup>6</sup>&nbsp;M<sub>☉</sub>
+        and surface brightnesses brighter than μ<sub>V</sub>&nbsp;≈&nbsp;25&nbsp;mag&nbsp;arcsec<sup>−2</sup>,
+        subject to emission-line detection limits. Our science goals require the
+        detection of weak auroral lines in individual spaxels of the optical IFU
+        data cubes, which imposes a minimum Hα flux on our targets.
       </p>
 
       <figure class="sample-census-figure">
@@ -49,33 +52,32 @@ const selectionAlt =
         </figcaption>
       </figure>
 
-      <p>
-        The DESI dwarf-galaxy population shows substantial diversity in
-        star-formation rate and metallicity at fixed stellar mass. MISTY
-        selects galaxies within 30&nbsp;Mpc and with stellar masses of
-        10<sup>6</sup>–10<sup>8.5</sup>&nbsp;M<sub>☉</sub>. To construct a
-        representative population of dwarf galaxies, we sample uniformly in
-        the specific-star-formation-rate–metallicity plane. Stellar masses
-        are estimated from broadband photometry, while star-formation rates
-        are derived from the Hα flux measured within the 1.5&nbsp;arcsec-diameter
-        fiber aperture and aperture-corrected using broadband photometry.
-        Metallicities are estimated from DESI integrated spectra within the
-        1.5&nbsp;arcsec-diameter fiber aperture, using the direct,
-        temperature-sensitive method where possible and the S-cal strong-line
-        calibration otherwise.
-      </p>
+      <h2 class="sample-selection-heading">Selection criteria</h2>
 
-    <p>
-      MISTY also samples the full range of large-scale environments, from
-      isolated dwarfs through galaxies in overdense regions to satellites
-      and interacting systems. The science goals require the detection of
-      weak auroral lines in individual spaxels of the optical IFU data
-      cubes. This requirement imposes an emission-line flux threshold
-      compatible with observations from Magellan and Keck (<em>f</em>(Hα) &gt; 10<sup>−15</sup> erg s<sup>−1</sup> cm<sup>−2</sup>&nbsp;
-      for Magellan and <em>f</em>(Hα) &gt; 3 × 10<sup>−16</sup> erg s<sup>−1</sup>
-      cm<sup>−2</sup> for Keck), while telescope
-      location also determines which targets are observable.
-    </p>
+      <ul class="sample-criteria-list">
+        <li>Distance within 30&nbsp;Mpc</li>
+        <li>
+          Stellar masses of 10<sup>6</sup>–10<sup>8.5</sup>&nbsp;M<sub>☉</sub>
+        </li>
+        <li>
+          Uniform sampling in the specific-star-formation-rate–metallicity plane
+        </li>
+        <li>
+          The full range of large-scale environments: isolated dwarfs, overdense
+          regions, satellites, and interacting systems
+        </li>
+        <li>
+          DESI fiber Hα flux above 10<sup>−15</sup>&nbsp;erg&nbsp;s<sup>−1</sup>&nbsp;cm<sup>−2</sup>&nbsp;for Magellan or 3 × 10<sup>−16</sup>&nbsp;erg&nbsp;s<sup>−1</sup>&nbsp;cm<sup>−2</sup>&nbsp;for Keck
+        </li>
+        <li>Observable from Las Campanas or Maunakea</li>
+      </ul>
+
+      <p>
+        Sampling uniformly in the specific-star-formation-rate–metallicity plane,
+        rather than reproducing the intrinsic distribution, ensures that MISTY
+        covers the full diversity of the low-mass population, including the sparsely
+        populated extremes of star-formation activity and metallicity.
+      </p>
     </div>
 
     <figure class="sample-selection-figure">
@@ -100,6 +102,10 @@ const selectionAlt =
       </figcaption>
     </figure>
   </article>
+
+  <div class="sample-gallery-section">
+    <GalaxyGallery />
+  </div>
 </BaseLayout>
 
 <style>
@@ -142,6 +148,27 @@ const selectionAlt =
   .sample-content a:hover {
     color: var(--navy-dark);
     text-decoration-thickness: 2px;
+  }
+
+  .sample-selection-heading {
+    margin: 0 0 0.7rem;
+    font-family: var(--font-sans);
+    font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .sample-criteria-list {
+    margin: 0 0 1.15em;
+    padding-left: 1.35rem;
+    list-style: disc;
+    overflow-wrap: anywhere;
+  }
+
+  .sample-criteria-list li + li {
+    margin-top: 0.4rem;
   }
 
   /* Figure 1 — single instance; phone-first normal flow */
@@ -212,6 +239,10 @@ const selectionAlt =
     background: var(--surface-strong);
   }
 
+  .sample-gallery-section {
+    margin-top: var(--space-section);
+  }
+
   @media (min-width: 768px) {
     .sample-page {
       padding-top: 1.65rem;
@@ -228,6 +259,10 @@ const selectionAlt =
 
     .sample-selection-figure {
       margin-top: 2.25rem;
+    }
+
+    .sample-criteria-list li + li {
+      margin-top: 0.45rem;
     }
   }
 </style>

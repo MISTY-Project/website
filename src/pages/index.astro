@@ -1,7 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ScienceGoals from "../components/ScienceGoals.astro";
 import GalaxyGallery from "../components/GalaxyGallery.astro";
+
+const introSampleAlt =
+  "Comparison of the MISTY HST sample with related resolved-galaxy imaging samples.";
+const introSampleSrc =
+  "/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png";
 ---
 
 <BaseLayout
@@ -11,28 +15,82 @@ import GalaxyGallery from "../components/GalaxyGallery.astro";
   <section class="intro" aria-labelledby="intro-heading">
     <h1 id="intro-heading" class="visually-hidden">About MISTY</h1>
     <div class="intro__prose">
-      <p>
-        How do galaxies turn gas into stars, regulate their growth, and assemble
-        their mass across cosmic time? At the heart of this question is the
-        baryon cycle, the continual exchange of matter and energy between stars,
-        the interstellar medium (ISM), and the large-scale circumgalactic environment. 
-        Gas cools into molecular clouds that collapse to form stars, while massive
-        stars return energy and newly synthesized elements through radiation,
-        winds, and supernovae, disrupting their natal clouds and recycling
-        material within galaxies and into their surroundings.
-      </p>
-      <p>
-        MISTY maps key stages of this cycle in the low-mass, low-metallicity
-        regime: a largely unexplored environment that encompasses the majority
-        of star-forming conditions in the Universe by number. We are building a
-        multi-wavelength, high-resolution view of nearby dwarf galaxies,
-        combining observations from the ground and space to resolve the stars, 
-        gas, and dust that drive galaxy evolution on 10-100 pc scales. 
-      </p>
+      <div class="homepage-intro-grid">
+        <div class="homepage-intro-grid__text">
+          <p>
+            MISTY is an ongoing multi-wavelength survey of approximately 200 nearby
+            dwarf galaxies that resolves stars, gas, and dust from approximately 10 pc
+            with HST and JWST to approximately 100–150 pc with ground-based integral-field
+            spectroscopy using the Magellan and Keck telescopes. It maps how low-mass,
+            low-metallicity galaxies turn gas into stars and how stellar feedback shapes
+            their interstellar medium, a regime in which most galaxies in the Universe
+            form their stars.
+          </p>
+        </div>
+
+        <figure
+          class="homepage-intro-sample-figure homepage-intro-sample-figure--desktop"
+        >
+          <img
+            src={introSampleSrc}
+            alt={introSampleAlt}
+            width="1600"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+
+      <figure
+        class="homepage-intro-sample-figure homepage-intro-sample-figure--mobile"
+      >
+        <img
+          src={introSampleSrc}
+          alt={introSampleAlt}
+          width="1600"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </div>
   </section>
 
-  <ScienceGoals />
+  <section
+    class="homepage-science-goals"
+    aria-labelledby="homepage-science-goals-heading"
+  >
+    <h2
+      id="homepage-science-goals-heading"
+      class="section-title homepage-science-goals__heading"
+    >
+      Survey Science Goals (<a href="/survey">details</a>)
+    </h2>
+
+    <ul class="homepage-science-goals__list">
+      <li>
+        <strong>Pre-supernova feedback:</strong> How is star formation regulated
+        by pre-supernova feedback?
+      </li>
+      <li>
+        <strong>Supernova feedback in dwarf galaxies:</strong> How does supernova
+        feedback reshape dwarf galaxies?
+      </li>
+      <li>
+        <strong>Ionizing radiation leakage and impact:</strong> How does ionizing
+        radiation escape and shape the surrounding gas?
+      </li>
+      <li>
+        <strong>The lifecycle of metals:</strong> How are metals mixed and recycled
+        in low-mass galaxies?
+      </li>
+      <li>
+        <strong>The evolution of PAHs:</strong> How do PAHs form, evolve, and
+        survive at low metallicity?
+      </li>
+    </ul>
+  </section>
 
   <GalaxyGallery />
 </BaseLayout>
@@ -49,18 +107,137 @@ import GalaxyGallery from "../components/GalaxyGallery.astro";
     color: var(--text);
   }
 
-  .intro__prose p {
+  .homepage-intro-grid__text p {
     margin-bottom: 1.2em;
   }
 
-  .intro__prose p:last-child {
+  .homepage-intro-grid__text p:last-child {
     margin-bottom: 0;
+  }
+
+  .homepage-intro-sample-figure {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .homepage-intro-sample-figure img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    background: var(--surface-strong);
+  }
+
+  /* Phone-first: stack text, then the after-grid image instance */
+  .homepage-intro-grid {
+    display: block;
+  }
+
+  .homepage-intro-sample-figure--desktop {
+    display: none;
+  }
+
+  .homepage-intro-sample-figure--mobile {
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: none;
+    margin: 1.25rem 0 1.5rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .homepage-science-goals {
+    max-width: var(--reading-max);
+  }
+
+  .homepage-science-goals__heading {
+    margin: 0;
+  }
+
+  .homepage-science-goals__heading a {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .homepage-science-goals__heading a:hover {
+    color: var(--navy-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  .homepage-science-goals__list {
+    margin: 1.1rem 0 0;
+    padding-left: 1.35rem;
+    list-style: disc;
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  .homepage-science-goals__list li + li {
+    margin-top: 0.65rem;
+  }
+
+  .homepage-science-goals__list strong {
+    font-weight: 600;
+  }
+
+  @media (max-width: 767px) {
+    .homepage-intro-sample-figure--desktop {
+      display: none;
+    }
+
+    .homepage-intro-sample-figure--mobile {
+      display: block;
+      float: none;
+      width: 100%;
+      max-width: none;
+      margin: 1.25rem 0 1.5rem;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
   @media (min-width: 768px) {
     .intro__prose {
       font-size: 1.125rem;
       line-height: 1.7;
+    }
+
+    .homepage-intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(1.5rem, 3vw, 3rem);
+      align-items: start;
+    }
+
+    .homepage-intro-sample-figure--desktop {
+      display: block;
+      float: none;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .homepage-intro-sample-figure--mobile {
+      display: none;
+    }
+
+    .homepage-science-goals__list {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      margin-top: 1.25rem;
+    }
+
+    .homepage-science-goals__list li + li {
+      margin-top: 0.75rem;
     }
   }
 </style>

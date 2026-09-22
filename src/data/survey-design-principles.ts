@@ -10,7 +10,7 @@ export const surveyDesignPrinciples: SurveyDesignPrinciple[] = [
     label: "A representative dwarf-galaxy population",
     paragraphs: [
       "MISTY targets nearby dwarf galaxies selected to span the diversity of the low-mass, low-metallicity population. The survey includes systems with a broad range of star-formation activity, gas-phase metallicity, and large-scale environment, from isolated field dwarfs to satellites of massive hosts and interacting dwarf–dwarf systems.",
-      "Star-formation activity, metallicity, and environment are expected to drive major variations in the low-metallicity baryon cycle. Star-formation activity sets the ionizing-photon budget; metallicity regulates cooling, chemistry, and shielding; and environment influences gas supply and dynamical history. Sampling this parameter space allows MISTY to determine which physical processes are widespread among dwarf galaxies and which depend on particular conditions.",
+      "Each of these properties is expected to drive major variations in the low-metallicity baryon cycle. Star-formation activity sets the ionizing-photon budget; metallicity regulates cooling, chemistry, and shielding; and environment influences gas supply and dynamical history. Sampling this parameter space allows MISTY to determine which physical processes are widespread among dwarf galaxies and which depend on particular conditions.",
       "Because the MISTY targets are drawn from a statistically defined nearby population, the resolved measurements will also provide a physical calibration set for interpreting the far larger dwarf-galaxy samples expected from DESI, Rubin, and Euclid in the local Universe.",
     ],
   },
