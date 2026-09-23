@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ObservationsPanel from "../components/ObservationsPanel.astro";
+import { withBase } from "../lib/base";
 
 const overviewAlt =
   "Examples of resolved properties from MISTY optical integral-field spectroscopy and HST and JWST imaging.";
@@ -27,10 +28,14 @@ const overviewAlt =
       <picture>
         <source
           media="(max-width: 767px)"
-          srcset="/images/observations/ifu-and-imaging-derived-properties-mobile.png"
+          srcset={withBase(
+            "/images/observations/ifu-and-imaging-derived-properties-mobile.png",
+          )}
         />
         <img
-          src="/images/observations/ifu-and-imaging-derived-properties.png"
+          src={withBase(
+            "/images/observations/ifu-and-imaging-derived-properties.png",
+          )}
           alt={overviewAlt}
           width="1800"
           height="1200"

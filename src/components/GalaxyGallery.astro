@@ -1,5 +1,6 @@
 ---
 import { galaxies, observationLegend } from "../data/galaxies";
+import { withBase } from "../lib/base";
 
 interface Props {
   asOf?: string;
@@ -26,7 +27,7 @@ function legacySurveyUrl(objectId: string): string {
             <li class="galaxy-gallery__legend-item">
               <img
                 class="galaxy-gallery__legend-icon"
-                src={item.icon}
+                src={withBase(item.icon)}
                 alt=""
                 width="32"
                 height="32"
@@ -85,7 +86,7 @@ function legacySurveyUrl(objectId: string): string {
             >
               <span class="galaxy-card__media">
                 <img
-                  src={galaxy.image}
+                  src={withBase(galaxy.image)}
                   alt=""
                   width="900"
                   height="900"

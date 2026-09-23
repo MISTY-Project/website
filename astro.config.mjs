@@ -3,6 +3,8 @@ import { defineConfig, fontProviders } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://misty-project.github.io",
+  base: "/website/",
   fonts: [
     {
       name: "DM Sans",

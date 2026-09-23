@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../lib/base";
+
 const categories = [
   { id: "ground-ifu", label: "Ground-based IFU" },
   { id: "hst-jwst", label: "HST + JWST imaging" },
@@ -293,10 +295,14 @@ const sampleAlt =
             <picture>
               <source
                 media="(max-width: 767px)"
-                srcset="/images/observations/HST_JWST_bands_illustration_mobile.png"
+                srcset={withBase(
+                  "/images/observations/HST_JWST_bands_illustration_mobile.png",
+                )}
               />
               <img
-                src="/images/observations/HST_JWST_bands_illustration.png"
+                src={withBase(
+                  "/images/observations/HST_JWST_bands_illustration.png",
+                )}
                 alt={bandsAlt}
                 width="1600"
                 height="900"
@@ -324,10 +330,14 @@ const sampleAlt =
             <picture>
               <source
                 media="(max-width: 767px)"
-                srcset="/images/observations/comparison_ground_to_space_based_mobile.png"
+                srcset={withBase(
+                  "/images/observations/comparison_ground_to_space_based_mobile.png",
+                )}
               />
               <img
-                src="/images/observations/comparison_ground_to_space_based.png"
+                src={withBase(
+                  "/images/observations/comparison_ground_to_space_based.png",
+                )}
                 alt={comparisonAlt}
                 width="1600"
                 height="900"
@@ -345,7 +355,9 @@ const sampleAlt =
             class="observations-space-sample-figure observations-space-sample-figure--desktop"
           >
             <img
-              src="/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png"
+              src={withBase(
+                "/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png",
+              )}
               alt={sampleAlt}
               width="1600"
               height="900"
@@ -374,7 +386,9 @@ const sampleAlt =
             class="observations-space-sample-figure observations-space-sample-figure--mobile"
           >
             <img
-              src="/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png"
+              src={withBase(
+                "/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png",
+              )}
               alt={sampleAlt}
               width="1600"
               height="900"

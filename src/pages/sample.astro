@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import GalaxyGallery from "../components/GalaxyGallery.astro";
+import { withBase } from "../lib/base";
 
 const censusAlt =
   "Scatter plot of the DESI spectroscopic census of dwarf galaxies, with each point marking a spectroscopically confirmed dwarf and a smaller pre-DESI comparison sample.";
@@ -39,7 +40,7 @@ const selectionAlt =
 
       <figure class="sample-census-figure">
         <img
-          src="/images/sample/desi-dwarf-census.png"
+          src={withBase("/images/sample/desi-dwarf-census.png")}
           alt={censusAlt}
           width="1535"
           height="1240"
@@ -84,10 +85,10 @@ const selectionAlt =
       <picture>
         <source
           media="(max-width: 767px)"
-          srcset="/images/sample/misty-sample-selection-mobile.png"
+          srcset={withBase("/images/sample/misty-sample-selection-mobile.png")}
         />
         <img
-          src="/images/sample/misty-sample-selection.png"
+          src={withBase("/images/sample/misty-sample-selection.png")}
           alt={selectionAlt}
           width="3600"
           height="1200"

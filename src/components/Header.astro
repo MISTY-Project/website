@@ -1,4 +1,6 @@
 ---
+import { withBase, withoutBase } from "../lib/base";
+
 const navItems = [
   { href: "/survey", label: "Survey" },
   { href: "/sample", label: "Sample" },
@@ -9,7 +11,9 @@ const navItems = [
   { href: "/related-efforts", label: "Related Efforts" },
 ];
 
-const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const homeHref = withBase("/");
+const homeIconSrc = withBase("/images/icons/home.png");
+const currentPath = withoutBase(Astro.url.pathname);
 const isHome = currentPath === "/";
 
 function isNavActive(href: string): boolean {
@@ -22,7 +26,7 @@ function isNavActive(href: string): boolean {
   <div class="site-header__inner site-shell">
     <div class="site-header__masthead">
       <div class="site-header__brand">
-        <a href="/" class="site-header__title">MISTY</a>
+        <a href={homeHref} class="site-header__title">MISTY</a>
         <p class="site-header__subtitle">
           Mapping the ISM and Stellar populations of TinY galaxies
         </p>
@@ -30,7 +34,7 @@ function isNavActive(href: string): boolean {
 
       <div class="site-header__actions">
         <a
-          href="/"
+          href={homeHref}
           class:list={[
             "site-header__home",
             "site-header__home--masthead",
@@ -42,7 +46,7 @@ function isNavActive(href: string): boolean {
         >
           <img
             class="site-header__home-icon"
-            src="/images/icons/home.png"
+            src={homeIconSrc}
             alt=""
             width="18"
             height="18"
@@ -70,7 +74,7 @@ function isNavActive(href: string): boolean {
       <ul class="site-header__list">
         <li class="site-header__home-item">
           <a
-            href="/"
+            href={homeHref}
             class:list={[
               "site-header__home",
               "site-header__home--nav",
@@ -82,7 +86,7 @@ function isNavActive(href: string): boolean {
           >
             <img
               class="site-header__home-icon"
-              src="/images/icons/home.png"
+              src={homeIconSrc}
               alt=""
               width="18"
               height="18"
@@ -97,7 +101,7 @@ function isNavActive(href: string): boolean {
             return (
               <li>
                 <a
-                  href={item.href}
+                  href={withBase(item.href)}
                   class:list={["site-header__link", { "is-active": active }]}
                   aria-current={active ? "page" : undefined}
                 >

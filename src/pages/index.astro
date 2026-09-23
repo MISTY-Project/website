@@ -1,11 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import GalaxyGallery from "../components/GalaxyGallery.astro";
+import { withBase } from "../lib/base";
 
 const introSampleAlt =
   "Comparison of the MISTY HST sample with related resolved-galaxy imaging samples.";
-const introSampleSrc =
-  "/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png";
+const introSampleSrc = withBase(
+  "/images/observations/HST_MISTY_LEGUS_PHANGS_samples.png",
+);
+const surveyHref = withBase("/survey");
 ---
 
 <BaseLayout
@@ -65,7 +68,7 @@ const introSampleSrc =
       id="homepage-science-goals-heading"
       class="section-title homepage-science-goals__heading"
     >
-      Survey Science Goals (<a href="/survey">details</a>)
+      Survey Science Goals (<a href={surveyHref}>details</a>)
     </h2>
 
     <ul class="homepage-science-goals__list">
